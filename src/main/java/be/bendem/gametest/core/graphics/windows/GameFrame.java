@@ -55,7 +55,7 @@ public class GameFrame extends BaseFrame implements Killable {
         // Event manager setup, might need to move somewhere more appropriate,
         // the engine also depends on it and might maybe be a better place
         // The GameTest constructor might also be a better place to put it
-        InternalEventManager internalEventManager = new InternalEventManager();
+        InternalEventManager<InternalEvent> internalEventManager = new InternalEventManager<>();
         new AwtEventAdapter(internalEventManager, this);
         InternalEventManager.setInstance(internalEventManager);
 
