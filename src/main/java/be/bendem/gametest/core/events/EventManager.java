@@ -64,7 +64,7 @@ public class EventManager<E> {
         }
 
         public void call(T event) {
-            if(getPredicate() != null && getPredicate().test(event)) {
+            if(getPredicate() == null || getPredicate().test(event)) {
                 callback.call(event);
             }
         }
