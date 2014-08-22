@@ -68,11 +68,7 @@ public class GameTest implements Killable {
     }
 
     public static void main(String[] args) {
-        Logger.info("" + InternalMouseEvent.class.isAssignableFrom(MouseClickedEvent.class));
-        Logger.info("" + MouseClickedEvent.class.isAssignableFrom(InternalMouseEvent.class));
         new Thread(instance::start).start();
-        //while(!System.console().readLine().equals("stop"));
-        //instance.kill();
     }
 
 }
