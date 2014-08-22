@@ -12,7 +12,7 @@ import be.bendem.gametest.core.logging.Logger;
  */
 public class GameTest implements Killable {
 
-    private final GameEngine gameEngine;
+    private final GameEngine engine;
     private final Graphics graphics;
     private final EventManager<InternalEvent> eventManager;
 
@@ -20,12 +20,13 @@ public class GameTest implements Killable {
         // Loading screen could go here :)
         eventManager = new EventManager<>();
         graphics = new Graphics(this);
-        gameEngine = new GameEngine(this);
+        engine = new GameEngine(this);
     }
 
     private void start() {
         Logger.debug("GameTest started");
         graphics.show();
+        engine.start();
     }
 
     @Override
@@ -38,7 +39,7 @@ public class GameTest implements Killable {
             System.exit(1);
         }
         try {
-            gameEngine.kill();
+            engine.kill();
         } catch(Throwable t) {
             Logger.error("Game engine couldn't die", t);
             System.exit(2);
@@ -47,8 +48,8 @@ public class GameTest implements Killable {
         System.exit(0);
     }
 
-    public GameEngine getGameEngine() {
-        return gameEngine;
+    public GameEngine getEngine() {
+        return engine;
     }
 
     public Graphics getGraphics() {

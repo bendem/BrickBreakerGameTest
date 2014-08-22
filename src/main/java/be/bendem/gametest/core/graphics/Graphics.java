@@ -2,6 +2,8 @@ package be.bendem.gametest.core.graphics;
 
 import be.bendem.gametest.GameTest;
 import be.bendem.gametest.core.Killable;
+import be.bendem.gametest.core.graphics.shapes.Circle;
+import be.bendem.gametest.core.graphics.shapes.Rectangle;
 import be.bendem.gametest.core.graphics.windows.GameFrame;
 import be.bendem.gametest.utils.RepeatingTask;
 
@@ -38,6 +40,14 @@ public class Graphics implements Killable {
     public void show() {
         graphicsUpdater.start();
         frame.display();
+    }
+
+    public Translatable createPlaterform() {
+        return frame.createPlateform();
+    }
+
+    public Translatable createBall() {
+        return frame.createBall();
     }
 
 }

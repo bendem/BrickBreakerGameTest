@@ -15,8 +15,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 /**
- * TODO Dirty thing to not redraw everything if not changed
- *
  * @author bendem
  */
 public abstract class BaseFrame extends JFrame {
@@ -52,6 +50,7 @@ public abstract class BaseFrame extends JFrame {
     }
 
     public void redraw() {
+        // TODO Dirty thing to not redraw everything if not changed
         panel.update(panel.getGraphics());
     }
 

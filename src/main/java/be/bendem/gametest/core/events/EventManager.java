@@ -40,7 +40,6 @@ public class EventManager<E> {
     }
 
     public class PredicateProvider<T extends E> {
-
         private List<Predicate<T>> predicates;
 
         public PredicateProvider() {
@@ -55,11 +54,9 @@ public class EventManager<E> {
         private List<Predicate<T>> getPredicates() {
             return predicates;
         }
-
     }
 
     private class InternalCallback<T extends E> {
-
         private final Callback<T> callback;
         private final PredicateProvider<T> predicateProvider;
 
@@ -81,7 +78,6 @@ public class EventManager<E> {
                     .anyMatch(value -> !value);
 
         }
-
     }
 
 }

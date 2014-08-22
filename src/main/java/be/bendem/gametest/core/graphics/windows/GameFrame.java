@@ -6,6 +6,7 @@ import be.bendem.gametest.core.events.InternalEvent;
 import be.bendem.gametest.core.events.awt.events.KeyReleasedEvent;
 import be.bendem.gametest.core.events.awt.events.WindowClosingEvent;
 import be.bendem.gametest.core.graphics.Point;
+import be.bendem.gametest.core.graphics.Translatable;
 import be.bendem.gametest.core.graphics.shapes.Circle;
 import be.bendem.gametest.core.graphics.shapes.Line;
 import be.bendem.gametest.core.graphics.shapes.Rectangle;
@@ -26,14 +27,26 @@ public class GameFrame extends BaseFrame implements Killable {
     public static final int RECTANGLE_WIDTH = 80;
     public static final int RECTANGLE_HEIGHT = 10;
 
-    private final Rectangle plateform;
-
     public GameFrame(GameTest game) {
         super("Game Test", game);
         panel.setPreferredSize(new Dimension(WIDTH, HEIGHT));
         panel.setBackground(Color.BLACK);
 
-        plateform = new Rectangle(
+        objects.add(new Line(new Point(0, HEIGHT / 2), new Point(WIDTH, HEIGHT / 2)));
+        objects.add(new Line(new Point(WIDTH / 2, 0), new Point(WIDTH / 2, HEIGHT)));
+
+        eventManager.register(e -> GameTest.getInstance().kill(), WindowClosingEvent.class);
+        // Such debug :O
+        eventManager.register(e -> Logger.debug(e.getClass().getName()), InternalEvent.class);
+    }
+
+    @Override
+    public void kill() {
+        dispose();
+    }
+
+    public Translatable createPlateform() {
+        Rectangle plateform = new Rectangle(
             new Point(
                 WIDTH / 2 - RECTANGLE_WIDTH / 2,
                 HEIGHT - RECTANGLE_HEIGHT - 5
@@ -43,29 +56,13 @@ public class GameFrame extends BaseFrame implements Killable {
             true
         );
         objects.add(plateform);
-
-        // Debug center
-        objects.add(new Circle(new Point(WIDTH / 2, HEIGHT / 2), 15));
-        objects.add(new Line(new Point(0, HEIGHT / 2), new Point(WIDTH, HEIGHT / 2)));
-        objects.add(new Line(new Point(WIDTH / 2, 0), new Point(WIDTH / 2, HEIGHT)));
-
-        eventManager.register(e -> GameTest.getInstance().kill(), WindowClosingEvent.class);
-        eventManager.register(e -> translatePlateform(-40), KeyReleasedEvent.class).filter(e -> e.isButton(KeyEvent.VK_LEFT));
-        eventManager.register(e -> translatePlateform(40), KeyReleasedEvent.class).filter(e -> e.isButton(KeyEvent.VK_RIGHT));
-        // Such debug :O
-        eventManager.register(e -> Logger.debug(e.getClass().getName()), InternalEvent.class);
+        return plateform;
     }
 
-    public void translatePlateform(int distance) {
-        if(distance == 0) {
-            return;
-        }
-        plateform.translate(distance, 0);
-    }
-
-    @Override
-    public void kill() {
-        dispose();
+    public Translatable createBall() {
+        Circle circle = new Circle(new Point(WIDTH / 2, HEIGHT / 2), 15);
+        objects.add(circle);
+        return circle;
     }
 
 }
