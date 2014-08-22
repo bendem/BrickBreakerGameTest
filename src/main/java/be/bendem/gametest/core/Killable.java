@@ -6,4 +6,5 @@ package be.bendem.gametest.core;
 public interface Killable {
 
     void kill();
+
 }

@@ -1,5 +1,6 @@
 package be.bendem.gametest.core.engine;
 
+import be.bendem.gametest.core.Killable;
 import be.bendem.gametest.core.graphics.Point;
 import be.bendem.gametest.core.graphics.Vector2D;
 import be.bendem.gametest.core.graphics.shapes.Circle;
@@ -9,7 +10,7 @@ import be.bendem.gametest.utils.RepeatingTask;
 /**
  * @author bendem
  */
-public class BallMovement {
+public class BallMovement implements Killable {
 
     private static final long BALL_MOVEMENT_DELAY = 10;
 
@@ -36,6 +37,7 @@ public class BallMovement {
         task.start();
     }
 
+    @Override
     public void kill() {
         task.cancel();
     }
