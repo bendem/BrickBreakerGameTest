@@ -6,6 +6,7 @@ import be.bendem.gametest.core.events.Callback;
 import be.bendem.gametest.core.events.EventManager;
 import be.bendem.gametest.core.events.InternalEvent;
 import be.bendem.gametest.core.events.awt.events.KeyReleasedEvent;
+import be.bendem.gametest.core.events.awt.events.WindowClosingEvent;
 import be.bendem.gametest.core.graphics.Translatable;
 
 import java.awt.event.KeyEvent;
@@ -28,6 +29,10 @@ public class GameEngine implements Killable {
         this.game = game;
         this.plateform = game.getGraphics().createPlaterform();
         this.ballMovement = new BallMovement(game.getGraphics().createBall());
+
+        // Where we kill that game
+        register(e -> game.kill(), KeyReleasedEvent.class).filter(e -> e.isButton(KeyEvent.VK_ESCAPE));
+        register(e -> game.kill(), WindowClosingEvent.class);
     }
 
     public void start() {

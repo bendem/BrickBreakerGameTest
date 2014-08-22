@@ -2,7 +2,6 @@ package be.bendem.gametest.core.graphics.shapes;
 
 import be.bendem.gametest.core.graphics.Point;
 import be.bendem.gametest.core.graphics.Translatable;
-import be.bendem.gametest.core.logging.Logger;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -57,7 +56,6 @@ public class Rectangle extends BaseShape implements Translatable {
     @Override
     public void draw(Graphics graphics) {
         graphics.setColor(color);
-        Logger.debug("Drawing a rectangle from " + corner + ", width: " + width + ", height: " + height);
         if(filled) {
             graphics.fillRect(corner.getA(), corner.getB(), width, height);
         } else {

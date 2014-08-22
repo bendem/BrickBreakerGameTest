@@ -2,13 +2,10 @@ package be.bendem.gametest.core.graphics.windows;
 
 import be.bendem.gametest.GameTest;
 import be.bendem.gametest.core.Killable;
-import be.bendem.gametest.core.events.InternalEvent;
-import be.bendem.gametest.core.events.awt.events.WindowClosingEvent;
 import be.bendem.gametest.core.graphics.Point;
 import be.bendem.gametest.core.graphics.shapes.Circle;
 import be.bendem.gametest.core.graphics.shapes.Line;
 import be.bendem.gametest.core.graphics.shapes.Rectangle;
-import be.bendem.gametest.core.logging.Logger;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -31,10 +28,6 @@ public class GameFrame extends BaseFrame implements Killable {
 
         objects.add(new Line(new Point(0, HEIGHT / 2), new Point(WIDTH, HEIGHT / 2)));
         objects.add(new Line(new Point(WIDTH / 2, 0), new Point(WIDTH / 2, HEIGHT)));
-
-        eventManager.register(e -> GameTest.getInstance().kill(), WindowClosingEvent.class);
-        // Such debug :O
-        eventManager.register(e -> Logger.debug(e.getClass().getName()), InternalEvent.class);
     }
 
     @Override
