@@ -11,11 +11,11 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * @author bendem
  */
-public class InternalEventManager<E> {
+public class EventManager<E> {
 
     private final Map<Class<? extends E>, List<Callback<? extends E>>> events;
 
-    public InternalEventManager() {
+    public EventManager() {
         // TODO See if something else might not be better
         events = new ConcurrentHashMap<>();
     }
@@ -37,18 +37,18 @@ public class InternalEventManager<E> {
                 .forEach((entry) -> entry.getValue().forEach(callback -> ((Callback<T>) callback).call(event)));
     }
 
-    private static InternalEventManager<InternalEvent> instance;
+    private static EventManager<InternalEvent> instance;
 
-    public static void setInstance(InternalEventManager<InternalEvent> instance) {
+    public static void setInstance(EventManager<InternalEvent> instance) {
         // TODO Change this to a constructor or something
         Validate.notNull("Can't set null instance", instance);
-        if(InternalEventManager.instance != null) {
+        if(EventManager.instance != null) {
             throw new IllegalStateException("Instance has already be set");
         }
-        InternalEventManager.instance = instance;
+        EventManager.instance = instance;
     }
 
-    public static InternalEventManager<InternalEvent> getInstance() {
+    public static EventManager<InternalEvent> getInstance() {
         if(instance == null) {
             throw new IllegalStateException("Instance has not been set");
         }

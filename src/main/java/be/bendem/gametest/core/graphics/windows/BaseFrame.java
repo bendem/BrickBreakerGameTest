@@ -1,8 +1,8 @@
 package be.bendem.gametest.core.graphics.windows;
 
 import be.bendem.gametest.core.events.Callback;
+import be.bendem.gametest.core.events.EventManager;
 import be.bendem.gametest.core.events.InternalEvent;
-import be.bendem.gametest.core.events.InternalEventManager;
 import be.bendem.gametest.core.graphics.Drawable;
 
 import java.awt.Graphics;
@@ -54,7 +54,7 @@ public abstract class BaseFrame extends JFrame {
     }
 
     protected <T extends InternalEvent> void register(Callback<T> callable, Class<T> clazz) {
-        InternalEventManager.getInstance().register(callable, clazz);
+        EventManager.getInstance().register(callable, clazz);
     }
 
 }

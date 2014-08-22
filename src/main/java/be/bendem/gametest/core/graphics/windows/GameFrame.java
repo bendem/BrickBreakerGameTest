@@ -2,11 +2,10 @@ package be.bendem.gametest.core.graphics.windows;
 
 import be.bendem.gametest.GameTest;
 import be.bendem.gametest.core.Killable;
+import be.bendem.gametest.core.events.EventManager;
 import be.bendem.gametest.core.events.InternalEvent;
-import be.bendem.gametest.core.events.InternalEventManager;
 import be.bendem.gametest.core.events.awt.AwtEventAdapter;
 import be.bendem.gametest.core.events.awt.events.KeyReleasedEvent;
-import be.bendem.gametest.core.events.awt.events.MouseReleasedEvent;
 import be.bendem.gametest.core.events.awt.events.WindowClosingEvent;
 import be.bendem.gametest.core.graphics.Point;
 import be.bendem.gametest.core.graphics.shapes.Circle;
@@ -55,9 +54,9 @@ public class GameFrame extends BaseFrame implements Killable {
         // Event manager setup, might need to move somewhere more appropriate,
         // the engine also depends on it and might maybe be a better place
         // The GameTest constructor might also be a better place to put it
-        InternalEventManager<InternalEvent> internalEventManager = new InternalEventManager<>();
-        new AwtEventAdapter(internalEventManager, this);
-        InternalEventManager.setInstance(internalEventManager);
+        EventManager<InternalEvent> eventManager = new EventManager<>();
+        new AwtEventAdapter(eventManager, this);
+        EventManager.setInstance(eventManager);
 
         register(e -> GameTest.getInstance().kill(), WindowClosingEvent.class);
         register(e -> Logger.debug(e.getClass().getName()), InternalEvent.class);

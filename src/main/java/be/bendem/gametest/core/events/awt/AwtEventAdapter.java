@@ -1,7 +1,7 @@
 package be.bendem.gametest.core.events.awt;
 
 import be.bendem.gametest.core.events.InternalEvent;
-import be.bendem.gametest.core.events.InternalEventManager;
+import be.bendem.gametest.core.events.EventManager;
 import be.bendem.gametest.core.events.awt.events.*;
 
 import java.awt.AWTEvent;
@@ -34,10 +34,10 @@ public class AwtEventAdapter {
         ACCEPTED_AWT_EVENT_CLASSES = Collections.unmodifiableSet(classes);
     }
 
-    private final InternalEventManager<InternalEvent> eventManager;
+    private final EventManager<InternalEvent> eventManager;
     private final JFrame frame;
 
-    public AwtEventAdapter(InternalEventManager<InternalEvent> eventManager, JFrame frame) {
+    public AwtEventAdapter(EventManager<InternalEvent> eventManager, JFrame frame) {
         this.eventManager = eventManager;
         this.frame = frame;
 
