@@ -60,14 +60,8 @@ public class GameTest implements Killable {
         return eventManager;
     }
 
-    private static final GameTest instance = new GameTest();
-
-    public static GameTest getInstance() {
-        return instance;
-    }
-
     public static void main(String[] args) {
-        new Thread(instance::start).start();
+        new Thread(() -> new GameTest().start()).start();
     }
 
 }
