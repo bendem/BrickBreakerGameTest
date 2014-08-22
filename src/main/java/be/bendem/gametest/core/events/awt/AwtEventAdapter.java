@@ -1,7 +1,7 @@
 package be.bendem.gametest.core.events.awt;
 
-import be.bendem.gametest.core.events.InternalEvent;
 import be.bendem.gametest.core.events.EventManager;
+import be.bendem.gametest.core.events.InternalEvent;
 import be.bendem.gametest.core.events.awt.events.*;
 
 import java.awt.AWTEvent;
@@ -19,7 +19,6 @@ import javax.swing.JFrame;
 
 /**
  * TODO The adapter needs to register all awt events to the internal manager
- * TODO Check if you can compare Class<?> using == or if should use .equals
  *
  * @author bendem
  */
@@ -35,17 +34,16 @@ public class AwtEventAdapter {
     }
 
     private final EventManager<InternalEvent> eventManager;
-    private final JFrame frame;
 
-    public AwtEventAdapter(EventManager<InternalEvent> eventManager, JFrame frame) {
+    public AwtEventAdapter(EventManager<InternalEvent> eventManager) {
         this.eventManager = eventManager;
-        this.frame = frame;
-
-        // Register all events
-        ACCEPTED_AWT_EVENT_CLASSES.forEach(this::register); // This is valid, IDEA is just dumb
     }
 
-    public <T extends AWTEvent> void register(Class<T> eventType) {
+    public void registerAllEvents(JFrame frame) {
+        ACCEPTED_AWT_EVENT_CLASSES.forEach(item -> register(item, frame));
+    }
+
+    public <T extends AWTEvent> void register(Class<T> eventType, JFrame frame) {
         if(!ACCEPTED_AWT_EVENT_CLASSES.contains(eventType)) {
             // In the end, everything inside here should disapear (all awt events need handleing)
             throw new IllegalArgumentException(eventType.getName() + " is not handled");

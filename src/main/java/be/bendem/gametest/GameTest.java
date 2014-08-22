@@ -2,6 +2,8 @@ package be.bendem.gametest;
 
 import be.bendem.gametest.core.Killable;
 import be.bendem.gametest.core.engine.GameEngine;
+import be.bendem.gametest.core.events.EventManager;
+import be.bendem.gametest.core.events.InternalEvent;
 import be.bendem.gametest.core.events.awt.events.InternalMouseEvent;
 import be.bendem.gametest.core.events.awt.events.MouseClickedEvent;
 import be.bendem.gametest.core.graphics.Graphics;
@@ -14,11 +16,13 @@ public class GameTest implements Killable {
 
     private final GameEngine gameEngine;
     private final Graphics graphics;
+    private final EventManager<InternalEvent> eventManager;
 
     public GameTest() {
         // Loading screen could go here :)
-        graphics = new Graphics();
-        gameEngine = new GameEngine(graphics);
+        eventManager = new EventManager<>();
+        graphics = new Graphics(this);
+        gameEngine = new GameEngine(this);
     }
 
     private void start() {
@@ -32,11 +36,29 @@ public class GameTest implements Killable {
         try {
             graphics.kill();
         } catch(Throwable t) {
-            Logger.error("Game couldn't die", t);
+            Logger.error("Game graphics couldn't die", t);
             System.exit(1);
+        }
+        try {
+            gameEngine.kill();
+        } catch(Throwable t) {
+            Logger.error("Game engine couldn't die", t);
+            System.exit(2);
         }
         Logger.info("GameTest died");
         System.exit(0);
+    }
+
+    public GameEngine getGameEngine() {
+        return gameEngine;
+    }
+
+    public Graphics getGraphics() {
+        return graphics;
+    }
+
+    public EventManager<InternalEvent> getEventManager() {
+        return eventManager;
     }
 
     private static final GameTest instance = new GameTest();

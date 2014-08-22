@@ -1,7 +1,5 @@
 package be.bendem.gametest.core.events;
 
-import be.bendem.gametest.utils.Validate;
-
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -35,24 +33,6 @@ public class EventManager<E> {
         events.entrySet().stream()
                 .filter((entry) -> entry.getKey().isAssignableFrom(event.getClass()))
                 .forEach((entry) -> entry.getValue().forEach(callback -> ((Callback<T>) callback).call(event)));
-    }
-
-    private static EventManager<InternalEvent> instance;
-
-    public static void setInstance(EventManager<InternalEvent> instance) {
-        // TODO Change this to a constructor or something
-        Validate.notNull("Can't set null instance", instance);
-        if(EventManager.instance != null) {
-            throw new IllegalStateException("Instance has already be set");
-        }
-        EventManager.instance = instance;
-    }
-
-    public static EventManager<InternalEvent> getInstance() {
-        if(instance == null) {
-            throw new IllegalStateException("Instance has not been set");
-        }
-        return instance;
     }
 
 }

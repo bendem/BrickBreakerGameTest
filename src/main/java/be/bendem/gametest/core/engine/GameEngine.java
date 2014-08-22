@@ -1,17 +1,21 @@
 package be.bendem.gametest.core.engine;
 
-import be.bendem.gametest.core.graphics.Graphics;
+import be.bendem.gametest.GameTest;
+import be.bendem.gametest.core.Killable;
 
 
 /**
  * @author bendem
  */
-public class GameEngine {
+public class GameEngine implements Killable {
 
-    private final Graphics graphics;
+    private final GameTest game;
 
-    public GameEngine(Graphics graphics) {
-        this.graphics = graphics;
+    public GameEngine(GameTest game) {
+        this.game = game;
     }
+
+    @Override
+    public void kill() {}
 
 }
