@@ -60,8 +60,4 @@ public abstract class BaseFrame extends JFrame {
         objects.forEach((object) -> object.draw(graphics.create()));
     }
 
-    protected <T extends InternalEvent> void register(Callback<T> callable, Class<T> clazz) {
-        eventManager.register(callable, clazz);
-    }
-
 }

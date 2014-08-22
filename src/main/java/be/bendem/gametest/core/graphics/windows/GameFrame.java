@@ -49,16 +49,11 @@ public class GameFrame extends BaseFrame implements Killable {
         objects.add(new Line(new Point(0, HEIGHT / 2), new Point(WIDTH, HEIGHT / 2)));
         objects.add(new Line(new Point(WIDTH / 2, 0), new Point(WIDTH / 2, HEIGHT)));
 
-        register(e -> GameTest.getInstance().kill(), WindowClosingEvent.class);
-        register(e -> Logger.debug(e.getClass().getName()), InternalEvent.class);
-        register(e -> {
-            int distance = 0;
-            if(e.isButton(KeyEvent.VK_LEFT))
-                distance = -40;
-            else if(e.isButton(KeyEvent.VK_RIGHT))
-                distance = 40;
-            translatePlateform(distance);
-        }, KeyReleasedEvent.class);
+        eventManager.register(e -> GameTest.getInstance().kill(), WindowClosingEvent.class);
+        eventManager.register(e -> translatePlateform(-40), KeyReleasedEvent.class).filter(e -> e.isButton(KeyEvent.VK_LEFT));
+        eventManager.register(e -> translatePlateform(40), KeyReleasedEvent.class).filter(e -> e.isButton(KeyEvent.VK_RIGHT));
+        // Such debug :O
+        eventManager.register(e -> Logger.debug(e.getClass().getName()), InternalEvent.class);
     }
 
     public void translatePlateform(int distance) {
