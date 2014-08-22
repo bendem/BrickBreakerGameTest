@@ -4,8 +4,6 @@ import be.bendem.gametest.core.Killable;
 import be.bendem.gametest.core.engine.GameEngine;
 import be.bendem.gametest.core.events.EventManager;
 import be.bendem.gametest.core.events.InternalEvent;
-import be.bendem.gametest.core.events.awt.events.InternalMouseEvent;
-import be.bendem.gametest.core.events.awt.events.MouseClickedEvent;
 import be.bendem.gametest.core.graphics.Graphics;
 import be.bendem.gametest.core.logging.Logger;
 

@@ -1,7 +1,6 @@
 package be.bendem.gametest.core.graphics.windows;
 
 import be.bendem.gametest.GameTest;
-import be.bendem.gametest.core.events.Callback;
 import be.bendem.gametest.core.events.EventManager;
 import be.bendem.gametest.core.events.InternalEvent;
 import be.bendem.gametest.core.events.awt.AwtEventAdapter;
