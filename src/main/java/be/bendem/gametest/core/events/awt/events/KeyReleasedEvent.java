@@ -7,15 +7,8 @@ import java.awt.event.KeyEvent;
  */
 public class KeyReleasedEvent extends InternalKeyEvent {
 
-    private final KeyEvent event;
-
     public KeyReleasedEvent(KeyEvent event) {
         super(event);
-        this.event = event;
-    }
-
-    public boolean isButton(int x) {
-        return event.getKeyCode() == x;
     }
 
 }
