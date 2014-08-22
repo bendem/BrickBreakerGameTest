@@ -3,10 +3,8 @@ package be.bendem.gametest.core.graphics.windows;
 import be.bendem.gametest.GameTest;
 import be.bendem.gametest.core.Killable;
 import be.bendem.gametest.core.events.InternalEvent;
-import be.bendem.gametest.core.events.awt.events.KeyReleasedEvent;
 import be.bendem.gametest.core.events.awt.events.WindowClosingEvent;
 import be.bendem.gametest.core.graphics.Point;
-import be.bendem.gametest.core.graphics.Translatable;
 import be.bendem.gametest.core.graphics.shapes.Circle;
 import be.bendem.gametest.core.graphics.shapes.Line;
 import be.bendem.gametest.core.graphics.shapes.Rectangle;
@@ -14,7 +12,6 @@ import be.bendem.gametest.core.logging.Logger;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.event.KeyEvent;
 
 /**
  * @author bendem
@@ -45,7 +42,7 @@ public class GameFrame extends BaseFrame implements Killable {
         dispose();
     }
 
-    public Translatable createPlateform() {
+    public Rectangle createPlateform() {
         Rectangle plateform = new Rectangle(
             new Point(
                 WIDTH / 2 - RECTANGLE_WIDTH / 2,
@@ -59,8 +56,8 @@ public class GameFrame extends BaseFrame implements Killable {
         return plateform;
     }
 
-    public Translatable createBall() {
-        Circle circle = new Circle(new Point(WIDTH / 2, HEIGHT / 2), 15);
+    public Circle createBall() {
+        Circle circle = new Circle(new Point(WIDTH / 2, HEIGHT / 2), 7, true);
         objects.add(circle);
         return circle;
     }

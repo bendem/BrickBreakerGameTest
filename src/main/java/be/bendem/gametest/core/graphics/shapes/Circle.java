@@ -36,4 +36,13 @@ public class Circle extends BaseShape implements Translatable {
     public void translate(int x, int y) {
         center.translate(x, y);
     }
+
+    public Point getCenter() {
+        return center;
+    }
+
+    public int getRadius() {
+        return radius;
+    }
+
 }

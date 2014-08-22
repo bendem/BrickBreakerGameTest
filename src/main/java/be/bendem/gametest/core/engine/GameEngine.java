@@ -7,13 +7,13 @@ import be.bendem.gametest.core.events.EventManager;
 import be.bendem.gametest.core.events.InternalEvent;
 import be.bendem.gametest.core.events.awt.events.KeyReleasedEvent;
 import be.bendem.gametest.core.graphics.Translatable;
-import be.bendem.gametest.core.graphics.shapes.Circle;
-import be.bendem.gametest.core.graphics.shapes.Rectangle;
 
 import java.awt.event.KeyEvent;
 
 
 /**
+ * TODO Check collisions
+ *
  * @author bendem
  */
 public class GameEngine implements Killable {
@@ -21,22 +21,22 @@ public class GameEngine implements Killable {
     private static final int PLATEFORM_DISTANCE = 40;
 
     private final GameTest game;
-    private final Translatable platerform;
-    private final Translatable ball;
+    private final Translatable plateform;
+    private final BallMovement ballMovement;
 
     public GameEngine(GameTest game) {
         this.game = game;
-        platerform = game.getGraphics().createPlaterform();
-        ball = game.getGraphics().createBall();
+        this.plateform = game.getGraphics().createPlaterform();
+        this.ballMovement = new BallMovement(game.getGraphics().createBall());
     }
 
     public void start() {
-        // TODO Check screen borders
-        register(e -> platerform.translate(-PLATEFORM_DISTANCE, 0), KeyReleasedEvent.class)
+        register(e -> plateform.translate(-PLATEFORM_DISTANCE, 0), KeyReleasedEvent.class)
                 .filter(e -> e.isButton(KeyEvent.VK_LEFT));
-
-        register(e -> platerform.translate(PLATEFORM_DISTANCE, 0), KeyReleasedEvent.class)
+        register(e -> plateform.translate(PLATEFORM_DISTANCE, 0), KeyReleasedEvent.class)
                 .filter(e -> e.isButton(KeyEvent.VK_RIGHT));
+
+        ballMovement.start();
     }
 
     private <T extends InternalEvent> EventManager<InternalEvent>.PredicateProvider<T> register(Callback<T> callback, Class<T> clazz) {
@@ -44,6 +44,8 @@ public class GameEngine implements Killable {
     }
 
     @Override
-    public void kill() {}
+    public void kill() {
+        ballMovement.kill();
+    }
 
 }

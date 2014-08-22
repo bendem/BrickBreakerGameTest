@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class Graphics implements Killable {
 
-    private static final int FPS = 10;
+    private static final int FPS = 30;
     private static final long UPDATE_INTERVAL = TimeUnit.SECONDS.toMillis(1) / FPS;
 
     private final GameTest game;
@@ -42,11 +42,11 @@ public class Graphics implements Killable {
         frame.display();
     }
 
-    public Translatable createPlaterform() {
+    public Rectangle createPlaterform() {
         return frame.createPlateform();
     }
 
-    public Translatable createBall() {
+    public Circle createBall() {
         return frame.createBall();
     }
 

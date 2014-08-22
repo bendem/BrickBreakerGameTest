@@ -7,8 +7,24 @@ import be.bendem.gametest.utils.Tuple;
  */
 public final class Vector2D extends Tuple<Point, Point> implements Cloneable {
 
-    Vector2D(Point start, Point end) {
+    public Vector2D(Point start, Point end) {
         super(start, end);
+    }
+
+    public int getX() {
+        return getB().getA() - getA().getA();
+    }
+
+    public int getY() {
+        return getB().getB() - getB().getA();
+    }
+
+    public void setX(int x) {
+        getB().setA(getA().getA() + x);
+    }
+
+    public void setY(int y) {
+        getB().setB(getA().getB() + y);
     }
 
     @Override
