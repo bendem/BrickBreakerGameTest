@@ -76,7 +76,6 @@ public class EventManager<E> {
                 || !predicateProvider.getPredicates().stream()
                     .map(predicate -> predicate.test(event))
                     .anyMatch(value -> !value);
-
         }
     }
 
