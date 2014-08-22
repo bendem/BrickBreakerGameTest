@@ -41,14 +41,19 @@ public class EventManager<E> {
 
     public class PredicateProvider<T extends E> {
 
-        private Predicate<T> predicate;
+        private List<Predicate<T>> predicates;
 
-        public void filter(Predicate<T> predicate) {
-            this.predicate = predicate;
+        public PredicateProvider() {
+            predicates = new LinkedList<>();
         }
 
-        private Predicate<T> getPredicate() {
-            return predicate;
+        public PredicateProvider<T> filter(Predicate<T> predicate) {
+            predicates.add(predicate);
+            return this;
+        }
+
+        private List<Predicate<T>> getPredicates() {
+            return predicates;
         }
 
     }
@@ -64,13 +69,17 @@ public class EventManager<E> {
         }
 
         public void call(T event) {
-            if(getPredicate() == null || getPredicate().test(event)) {
+            if(shouldCall(event)) {
                 callback.call(event);
             }
         }
 
-        public Predicate<T> getPredicate() {
-            return predicateProvider.getPredicate();
+        private boolean shouldCall(T event) {
+            return predicateProvider.getPredicates().size() == 0
+                || !predicateProvider.getPredicates().stream()
+                    .map(predicate -> predicate.test(event))
+                    .anyMatch(value -> !value);
+
         }
 
     }
