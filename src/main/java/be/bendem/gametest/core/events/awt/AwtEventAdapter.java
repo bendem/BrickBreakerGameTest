@@ -18,8 +18,6 @@ import java.util.Set;
 import javax.swing.JFrame;
 
 /**
- * TODO The adapter needs to register all awt events to the internal manager
- *
  * @author bendem
  */
 public class AwtEventAdapter {

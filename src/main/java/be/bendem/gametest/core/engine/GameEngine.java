@@ -8,7 +8,6 @@ import be.bendem.gametest.core.events.InternalEvent;
 import be.bendem.gametest.core.events.awt.events.KeyPressedEvent;
 import be.bendem.gametest.core.events.awt.events.KeyReleasedEvent;
 import be.bendem.gametest.core.events.awt.events.WindowClosingEvent;
-import be.bendem.gametest.core.graphics.Translatable;
 import be.bendem.gametest.core.graphics.shapes.Rectangle;
 import be.bendem.gametest.core.graphics.windows.GameFrame;
 
