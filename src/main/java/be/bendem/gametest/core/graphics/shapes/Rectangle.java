@@ -38,13 +38,12 @@ public class Rectangle extends BaseShape implements Translatable {
 
     public Rectangle(Point corner, int width, int height, boolean filled, Color color) {
         super(filled);
-        // TODO Choose between w -= w and w = Math.abs(w)
         if(width < 0) {
-            width -= width;
+            width = -width;
             corner.setA(corner.getA() - width);
         }
         if(height < 0) {
-            height = Math.abs(height);
+            height = -height;
             corner.setB(corner.getB() - height);
         }
         this.corner = corner;
