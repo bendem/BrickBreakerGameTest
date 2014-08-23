@@ -53,6 +53,18 @@ public class Rectangle extends BaseShape implements Translatable {
         this.color = color;
     }
 
+    public Point getCorner() {
+        return corner;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
     @Override
     public void draw(Graphics graphics) {
         graphics.setColor(color);
