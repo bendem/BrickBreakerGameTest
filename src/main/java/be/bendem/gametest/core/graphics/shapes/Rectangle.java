@@ -38,6 +38,7 @@ public class Rectangle extends BaseShape implements Translatable {
 
     public Rectangle(Point corner, int width, int height, boolean filled, Color color) {
         super(filled);
+        // Prevents the corner from not being the upper left one
         if(width < 0) {
             width = -width;
             corner.setA(corner.getA() - width);
@@ -46,6 +47,7 @@ public class Rectangle extends BaseShape implements Translatable {
             height = -height;
             corner.setB(corner.getB() - height);
         }
+
         this.corner = corner;
         this.width = width;
         this.height = height;
