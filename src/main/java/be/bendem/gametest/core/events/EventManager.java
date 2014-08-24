@@ -35,8 +35,8 @@ public class EventManager<E> {
     @SuppressWarnings("unchecked")
     public <T extends E> void spawnEvent(T event) {
         events.entrySet().stream()
-                .filter((entry) -> entry.getKey().isAssignableFrom(event.getClass()))
-                .forEach((entry) -> entry.getValue().forEach(internalCallback -> ((InternalCallback<T>) internalCallback).call(event)));
+                .filter(entry -> entry.getKey().isAssignableFrom(event.getClass()))
+                .forEach(entry -> entry.getValue().forEach(internalCallback -> ((InternalCallback<T>) internalCallback).call(event)));
     }
 
     public class PredicateProvider<T extends E> {

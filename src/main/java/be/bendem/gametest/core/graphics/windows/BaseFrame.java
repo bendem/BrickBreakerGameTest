@@ -55,7 +55,7 @@ public abstract class BaseFrame extends JFrame {
     }
 
     private void draw(Graphics graphics) {
-        objects.forEach((object) -> object.draw(graphics.create()));
+        objects.forEach(object -> object.draw(graphics.create()));
     }
 
 }
