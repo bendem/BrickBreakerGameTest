@@ -4,7 +4,9 @@ import be.bendem.gametest.core.Killable;
 import be.bendem.gametest.core.graphics.Point;
 import be.bendem.gametest.core.graphics.Vector2D;
 import be.bendem.gametest.core.graphics.shapes.Circle;
+import be.bendem.gametest.core.graphics.shapes.Rectangle;
 import be.bendem.gametest.core.graphics.windows.GameFrame;
+import be.bendem.gametest.utils.IntersectionUtils;
 import be.bendem.gametest.utils.RepeatingTask;
 
 /**
@@ -17,8 +19,10 @@ public class BallMovement implements Killable {
     private final Circle ball;
     private final RepeatingTask task;
     private final Vector2D direction;
+    private final Rectangle plateform;
 
-    public BallMovement(Circle ball) {
+    public BallMovement(Rectangle plateform, Circle ball) {
+        this.plateform = plateform;
         this.ball = ball;
         this.task = new RepeatingTask(this::moveBall, "ball-mover", BALL_MOVEMENT_DELAY);
         direction = new Vector2D(Point.zero(), new Point(0, 2));
@@ -26,7 +30,8 @@ public class BallMovement implements Killable {
 
     public void moveBall() {
         if(ball.getCenter().getB() + ball.getRadius() >= GameFrame.HEIGHT && direction.getY() > 0
-                || ball.getCenter().getB() - ball.getRadius() <= 0 && direction.getY() < 0) {
+                || ball.getCenter().getB() - ball.getRadius() <= 0 && direction.getY() < 0
+                || IntersectionUtils.doIntersect(plateform, ball)) {
             direction.setY(-direction.getY());
         }
         ball.translate(direction.getX(), direction.getY());
