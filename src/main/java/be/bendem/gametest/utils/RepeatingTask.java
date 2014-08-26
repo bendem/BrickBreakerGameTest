@@ -60,13 +60,15 @@ public class RepeatingTask implements Runnable {
         if(delay > 0) {
             pause(delay);
         }
+        long start;
         while(!cancelled) {
+            start = System.currentTimeMillis();
             try {
                 runnable.run();
             } catch(Exception e) {
                 Logger.error("Error while executing " + thread.getName(), e);
             }
-            pause(time);
+            pause(time - (System.currentTimeMillis() - start));
         }
         running = false;
         finished = true;
@@ -80,6 +82,9 @@ public class RepeatingTask implements Runnable {
      * @param time The time the thread will pause.
      */
     protected final void pause(long time) {
+        if(time < 1) {
+            return;
+        }
         idling = true;
         try {
             Thread.sleep(time);
