@@ -66,6 +66,14 @@ public class Rectangle extends BaseShape implements Translatable {
         return height;
     }
 
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
     @Override
     public void draw(Graphics graphics) {
         graphics.setColor(color);

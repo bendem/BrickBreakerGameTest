@@ -27,7 +27,7 @@ public class EventManager<E> {
             events.put(eventType, callbackList);
         }
         PredicateProvider<T> predicateProvider = new PredicateProvider<>();
-        InternalCallback<T> internalCallback = new InternalCallback<T>(callback, predicateProvider);
+        InternalCallback<T> internalCallback = new InternalCallback<>(callback, predicateProvider);
         callbackList.add(internalCallback);
         return predicateProvider;
     }

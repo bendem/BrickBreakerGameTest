@@ -11,7 +11,7 @@ import java.awt.Graphics;
  */
 public class Circle extends BaseShape implements Translatable {
 
-    private Point center;
+    private final Point center;
     private int radius;
     private final Color color;
 
@@ -51,6 +51,10 @@ public class Circle extends BaseShape implements Translatable {
 
     public int getRadius() {
         return radius;
+    }
+
+    public void setRadius(int radius) {
+        this.radius = radius;
     }
 
 }

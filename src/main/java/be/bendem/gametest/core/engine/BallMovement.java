@@ -1,7 +1,6 @@
 package be.bendem.gametest.core.engine;
 
 import be.bendem.gametest.core.Killable;
-import be.bendem.gametest.core.graphics.Point;
 import be.bendem.gametest.core.graphics.Vector2D;
 import be.bendem.gametest.core.graphics.shapes.Circle;
 import be.bendem.gametest.core.graphics.shapes.Rectangle;
