@@ -25,7 +25,7 @@ public class BallMovement implements Killable {
         this.plateform = plateform;
         this.ball = ball;
         this.task = new RepeatingTask(this::moveBall, "ball-mover", BALL_MOVEMENT_DELAY);
-        direction = new Vector2D(Point.zero(), new Point(0, 2));
+        direction = new Vector2D(1, 2);
     }
 
     public void moveBall() {
@@ -33,6 +33,10 @@ public class BallMovement implements Killable {
                 || ball.getCenter().getB() - ball.getRadius() <= 0 && direction.getY() < 0
                 || IntersectionUtils.doIntersect(plateform, ball)) {
             direction.setY(-direction.getY());
+        }
+        if(ball.getCenter().getA() + ball.getRadius() >= GameFrame.WIDTH && direction.getX() > 0
+                || ball.getCenter().getA() - ball.getRadius() <= 0 && direction.getX() < 0) {
+            direction.setX(-direction.getX());
         }
         ball.translate(direction.getX(), direction.getY());
     }

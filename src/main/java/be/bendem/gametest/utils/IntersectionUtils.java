@@ -5,6 +5,8 @@ import be.bendem.gametest.core.graphics.shapes.Circle;
 import be.bendem.gametest.core.graphics.shapes.Rectangle;
 
 /**
+ * TODO Check stuff in http://docs.oracle.com/javase/8/docs/api/java/awt/geom/Area.html
+ *
  * @author bendem
  */
 public class IntersectionUtils {
