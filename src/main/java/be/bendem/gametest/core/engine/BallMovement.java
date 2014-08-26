@@ -13,7 +13,7 @@ import be.bendem.gametest.utils.RepeatingTask;
  */
 public class BallMovement implements Killable {
 
-    private static final long BALL_MOVEMENT_DELAY = 10;
+    private static final long BALL_MOVEMENT_DELAY = 7;
 
     private final Circle ball;
     private final RepeatingTask task;
