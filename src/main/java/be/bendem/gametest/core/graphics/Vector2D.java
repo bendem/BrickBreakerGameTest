@@ -19,20 +19,35 @@ public final class Vector2D extends Tuple<Point, Point> implements Cloneable {
         super(start, end);
     }
 
+    public void nullifyStart() {
+        int x1 = getA().getA();
+        if(x1 != 0) {
+            getB().setA(0 - x1 + getB().getA());
+        }
+        int y1 = getA().getB();
+        if(y1 != 0) {
+            getB().setB(0 - y1 + getB().getB());
+        }
+    }
+
     public int getX() {
-        return getB().getA() - getA().getA();
+        nullifyStart();
+        return getB().getA();
     }
 
     public int getY() {
-        return getB().getB() - getB().getA();
+        nullifyStart();
+        return getB().getB();
     }
 
     public void setX(int x) {
-        getB().setA(getA().getA() + x);
+        nullifyStart();
+        getB().setA(x);
     }
 
     public void setY(int y) {
-        getB().setB(getA().getB() + y);
+        nullifyStart();
+        getB().setB(y);
     }
 
     @Override
