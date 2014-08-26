@@ -13,7 +13,6 @@ import be.bendem.gametest.core.graphics.windows.GameFrame;
 
 import java.awt.event.KeyEvent;
 
-
 /**
  * TODO Check collisions
  *

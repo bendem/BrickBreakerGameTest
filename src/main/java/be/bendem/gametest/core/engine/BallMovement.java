@@ -25,9 +25,8 @@ public class BallMovement implements Killable {
     }
 
     public void moveBall() {
-        if(ball.getCenter().getB() + ball.getRadius() >= GameFrame.HEIGHT && direction.getY() > 0) {
-            direction.setY(-direction.getY());
-        } else if(ball.getCenter().getB() - ball.getRadius() <= 0 && direction.getY() < 0) {
+        if(ball.getCenter().getB() + ball.getRadius() >= GameFrame.HEIGHT && direction.getY() > 0
+                || ball.getCenter().getB() - ball.getRadius() <= 0 && direction.getY() < 0) {
             direction.setY(-direction.getY());
         }
         ball.translate(direction.getX(), direction.getY());

@@ -3,6 +3,7 @@ package be.bendem.gametest.core.graphics.shapes;
 import be.bendem.gametest.core.graphics.Point;
 import be.bendem.gametest.core.graphics.Translatable;
 
+import java.awt.Color;
 import java.awt.Graphics;
 
 /**
@@ -12,19 +13,26 @@ public class Circle extends BaseShape implements Translatable {
 
     private Point center;
     private int radius;
+    private final Color color;
 
     public Circle(Point center, int radius) {
         this(center, radius, false);
     }
 
     public Circle(Point center, int radius, boolean filled) {
+        this(center, radius, filled, Color.GRAY);
+    }
+
+    public Circle(Point center, int radius, boolean filled, Color color) {
         super(filled);
         this.center = center;
         this.radius = radius;
+        this.color = color;
     }
 
     @Override
     public void draw(Graphics graphics) {
+        graphics.setColor(color);
         if(filled) {
             graphics.fillOval(center.getA() - radius, center.getB() - radius, radius * 2, radius * 2);
         } else {

@@ -50,7 +50,7 @@ public class GameFrame extends BaseFrame implements Killable {
     }
 
     public Circle createBall() {
-        Circle circle = new Circle(new Point(WIDTH / 2, HEIGHT / 2), 7, true);
+        Circle circle = new Circle(new Point(WIDTH / 2, HEIGHT / 2), 7, true, Color.LIGHT_GRAY);
         objects.add(circle);
         return circle;
     }
