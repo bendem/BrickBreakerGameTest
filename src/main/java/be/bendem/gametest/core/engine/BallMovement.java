@@ -22,7 +22,7 @@ public class BallMovement implements Killable {
     public BallMovement(GameTest game, Rectangle plateform, Circle ball) {
         this.plateform = plateform;
         this.ball = ball;
-        this.task = new RepeatingTask(this::moveBall, "ball-mover", game.getConfig().getInt("ball.update.delay", 7));
+        this.task = new RepeatingTask(this::moveBall, "ball-mover", game.getConfig().getInt("engine.ball.update.delay", 7));
         direction = new Vector2D(1, 2);
     }
 

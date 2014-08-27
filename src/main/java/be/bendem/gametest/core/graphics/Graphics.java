@@ -23,7 +23,7 @@ public class Graphics implements Killable {
         this.game = game;
         this.frame = new GameFrame(game);
 
-        long updateInterval = TimeUnit.SECONDS.toMillis(1) / game.getConfig().getInt("fps", 40);
+        long updateInterval = TimeUnit.SECONDS.toMillis(1) / game.getConfig().getInt("graphics.fps", 40);
         this.graphicsUpdater = new RepeatingTask(frame::redraw, "graphics-updater", updateInterval);
     }
 

@@ -27,7 +27,7 @@ public class GameEngine implements Killable {
     private final BallMovement ballMovement;
 
     public GameEngine(GameTest game) {
-        PLATEFORM_DISTANCE = game.getConfig().getInt("plateform.distance", 15);
+        PLATEFORM_DISTANCE = game.getConfig().getInt("engine.plateform.distance", 15);
 
         this.game = game;
         this.plateform = game.getGraphics().createPlaterform();
