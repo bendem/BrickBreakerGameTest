@@ -1,5 +1,6 @@
 package be.bendem.gametest.core.engine;
 
+import be.bendem.gametest.GameTest;
 import be.bendem.gametest.core.Killable;
 import be.bendem.gametest.core.graphics.Vector2D;
 import be.bendem.gametest.core.graphics.shapes.Circle;
@@ -13,17 +14,15 @@ import be.bendem.gametest.utils.RepeatingTask;
  */
 public class BallMovement implements Killable {
 
-    private static final long BALL_MOVEMENT_DELAY = 7;
-
     private final Circle ball;
     private final RepeatingTask task;
     private final Vector2D direction;
     private final Rectangle plateform;
 
-    public BallMovement(Rectangle plateform, Circle ball) {
+    public BallMovement(GameTest game, Rectangle plateform, Circle ball) {
         this.plateform = plateform;
         this.ball = ball;
-        this.task = new RepeatingTask(this::moveBall, "ball-mover", BALL_MOVEMENT_DELAY);
+        this.task = new RepeatingTask(this::moveBall, "ball-mover", game.getConfig().getInt("ball.update.delay", 7));
         direction = new Vector2D(1, 2);
     }
 

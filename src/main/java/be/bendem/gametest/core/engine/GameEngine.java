@@ -20,16 +20,18 @@ import java.awt.event.KeyEvent;
  */
 public class GameEngine implements Killable {
 
-    private static final int PLATEFORM_DISTANCE = 15;
+    private final int PLATEFORM_DISTANCE;
 
     private final GameTest game;
     private final Rectangle plateform;
     private final BallMovement ballMovement;
 
     public GameEngine(GameTest game) {
+        PLATEFORM_DISTANCE = game.getConfig().getInt("plateform.distance", 15);
+
         this.game = game;
         this.plateform = game.getGraphics().createPlaterform();
-        this.ballMovement = new BallMovement(this.plateform, game.getGraphics().createBall());
+        this.ballMovement = new BallMovement(game, plateform, game.getGraphics().createBall());
     }
 
     public void start() {

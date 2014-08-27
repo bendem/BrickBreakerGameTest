@@ -5,6 +5,7 @@ import be.bendem.gametest.core.Killable;
 import be.bendem.gametest.core.graphics.shapes.Circle;
 import be.bendem.gametest.core.graphics.shapes.Rectangle;
 import be.bendem.gametest.core.graphics.windows.GameFrame;
+import be.bendem.gametest.core.logging.Logger;
 import be.bendem.gametest.utils.RepeatingTask;
 
 import java.util.concurrent.TimeUnit;
@@ -14,9 +15,6 @@ import java.util.concurrent.TimeUnit;
  */
 public class Graphics implements Killable {
 
-    private static final int FPS = 40;
-    private static final long UPDATE_INTERVAL = TimeUnit.SECONDS.toMillis(1) / FPS;
-
     private final GameTest game;
     private final GameFrame frame;
     private final RepeatingTask graphicsUpdater;
@@ -24,7 +22,9 @@ public class Graphics implements Killable {
     public Graphics(GameTest game) {
         this.game = game;
         this.frame = new GameFrame(game);
-        this.graphicsUpdater = new RepeatingTask(frame::redraw, "graphics-updater", UPDATE_INTERVAL);
+
+        long updateInterval = TimeUnit.SECONDS.toMillis(1) / game.getConfig().getInt("fps", 40);
+        this.graphicsUpdater = new RepeatingTask(frame::redraw, "graphics-updater", updateInterval);
     }
 
     @Override
@@ -32,7 +32,7 @@ public class Graphics implements Killable {
         try {
             graphicsUpdater.cancel(500);
         } catch(InterruptedException e) {
-            e.printStackTrace();
+            Logger.error("Could not cancel graphic updater", e);
         }
         frame.kill();
     }
