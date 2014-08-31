@@ -15,12 +15,10 @@ import java.util.concurrent.TimeUnit;
  */
 public class Graphics implements Killable {
 
-    private final GameTest game;
     private final GameFrame frame;
     private final RepeatingTask graphicsUpdater;
 
     public Graphics(GameTest game) {
-        this.game = game;
         this.frame = new GameFrame(game);
 
         long updateInterval = TimeUnit.SECONDS.toMillis(1) / game.getConfig().getInt("graphics.fps", 40);

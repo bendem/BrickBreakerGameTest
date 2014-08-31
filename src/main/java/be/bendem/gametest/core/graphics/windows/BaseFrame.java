@@ -6,41 +6,39 @@ import be.bendem.gametest.core.events.InternalEvent;
 import be.bendem.gametest.core.events.awt.AwtEventAdapter;
 import be.bendem.gametest.core.graphics.Drawable;
 
+import java.awt.Frame;
 import java.awt.Graphics;
+import java.awt.Panel;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-
 /**
  * @author bendem
  */
-public abstract class BaseFrame extends JFrame {
+public abstract class BaseFrame extends Frame {
 
-    protected final EventManager<InternalEvent> eventManager;
-    protected final JPanel panel;
+    protected final Panel panel;
     protected final Collection<Drawable> objects;
 
     public BaseFrame(String title, GameTest game) {
         super(title);
-        eventManager = game.getEventManager();
 
-        panel = new JPanel() {
+        panel = new Panel() {
             @Override
-            protected void paintComponent(Graphics graphics) {
+            public void paint(Graphics graphics) {
                 // Call to super makes sure to handle the opaque background
-                super.paintComponent(graphics);
+                super.paint(graphics);
                 draw(graphics);
             }
         };
-        setContentPane(panel);
+        panel.setFocusable(false);
+        add(panel);
+
         // TODO See if another collection might not be better
         objects = Collections.synchronizedSet(new LinkedHashSet<>());
-        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
-        new AwtEventAdapter(eventManager).registerAllEvents(this);
+        new AwtEventAdapter(game.getEventManager()).registerAllEvents(this);
     }
 
     public void display() {

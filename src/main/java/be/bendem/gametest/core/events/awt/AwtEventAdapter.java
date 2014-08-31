@@ -5,6 +5,7 @@ import be.bendem.gametest.core.events.InternalEvent;
 import be.bendem.gametest.core.events.awt.events.*;
 
 import java.awt.AWTEvent;
+import java.awt.Frame;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -14,8 +15,6 @@ import java.awt.event.WindowListener;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
-
-import javax.swing.JFrame;
 
 /**
  * @author bendem
@@ -37,11 +36,11 @@ public class AwtEventAdapter {
         this.eventManager = eventManager;
     }
 
-    public void registerAllEvents(JFrame frame) {
+    public void registerAllEvents(Frame frame) {
         ACCEPTED_AWT_EVENT_CLASSES.forEach(item -> register(item, frame));
     }
 
-    public <T extends AWTEvent> void register(Class<T> eventType, JFrame frame) {
+    public <T extends AWTEvent> void register(Class<T> eventType, Frame frame) {
         if(!ACCEPTED_AWT_EVENT_CLASSES.contains(eventType)) {
             // In the end, everything inside here should disapear (all awt events need handleing)
             throw new IllegalArgumentException(eventType.getName() + " is not handled");
@@ -50,7 +49,7 @@ public class AwtEventAdapter {
         if(eventType == WindowEvent.class) {
             frame.addWindowListener(new WindowsHandler());
         } else if(eventType == MouseEvent.class) {
-            frame.getContentPane().addMouseListener(new MouseHandler());
+            frame.addMouseListener(new MouseHandler());
         } else if(eventType == KeyEvent.class) {
             frame.addKeyListener(new KeyHandler());
         }
