@@ -24,6 +24,8 @@ public abstract class BaseFrame extends Frame {
     public BaseFrame(String title, GameTest game) {
         super(title);
 
+        setUndecorated(true);
+
         panel = new Panel() {
             @Override
             public void paint(Graphics graphics) {

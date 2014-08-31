@@ -5,13 +5,18 @@ import be.bendem.gametest.core.Killable;
 import be.bendem.gametest.core.events.Callback;
 import be.bendem.gametest.core.events.EventManager;
 import be.bendem.gametest.core.events.InternalEvent;
+import be.bendem.gametest.core.events.awt.events.InternalMouseEvent;
 import be.bendem.gametest.core.events.awt.events.KeyPressedEvent;
 import be.bendem.gametest.core.events.awt.events.KeyReleasedEvent;
+import be.bendem.gametest.core.events.awt.events.MouseClickedEvent;
+import be.bendem.gametest.core.events.awt.events.MousePressedEvent;
 import be.bendem.gametest.core.events.awt.events.WindowClosingEvent;
 import be.bendem.gametest.core.graphics.shapes.Rectangle;
 import be.bendem.gametest.core.graphics.windows.GameFrame;
+import be.bendem.gametest.core.logging.Logger;
 
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 
 /**
  * TODO Check collisions
@@ -40,23 +45,25 @@ public class GameEngine implements Killable {
         register(e -> game.kill(), WindowClosingEvent.class);
 
         // Game controls
-        register(this::moveLeft, KeyPressedEvent.class).filter(e -> e.isButton(KeyEvent.VK_LEFT));
-        register(this::moveRight, KeyPressedEvent.class).filter(e -> e.isButton(KeyEvent.VK_RIGHT));
+        register(e -> moveLeft(PLATEFORM_DISTANCE * 2), MousePressedEvent.class).filter(event -> event.isButtonDown(1));
+        register(e -> moveLeft(PLATEFORM_DISTANCE), KeyPressedEvent.class).filter(e -> e.isButton(KeyEvent.VK_LEFT));
+        register(e -> moveRight(PLATEFORM_DISTANCE * 2), MousePressedEvent.class).filter(event -> event.isButtonDown(3));
+        register(e -> moveRight(PLATEFORM_DISTANCE), KeyPressedEvent.class).filter(e -> e.isButton(KeyEvent.VK_RIGHT));
 
         ballMovement.start();
     }
 
-    private void moveLeft(KeyPressedEvent e) {
-        if(plateform.getCorner().getA() > 5 + PLATEFORM_DISTANCE) {
-            plateform.translate(-PLATEFORM_DISTANCE, 0);
+    private void moveLeft(int distance) {
+        if(plateform.getCorner().getA() > 5 + distance) {
+            plateform.translate(-distance, 0);
         } else {
             plateform.getCorner().setA(5);
         }
     }
 
-    private void moveRight(KeyPressedEvent e) {
-        if(plateform.getCorner().getA() + plateform.getWidth() + PLATEFORM_DISTANCE < GameFrame.WIDTH - 5) {
-            plateform.translate(PLATEFORM_DISTANCE, 0);
+    private void moveRight(int distance) {
+        if(plateform.getCorner().getA() + plateform.getWidth() + distance < GameFrame.WIDTH - 5) {
+            plateform.translate(distance, 0);
         } else {
             plateform.getCorner().setA(GameFrame.WIDTH - plateform.getWidth() - 5);
         }

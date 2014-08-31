@@ -49,7 +49,7 @@ public class AwtEventAdapter {
         if(eventType == WindowEvent.class) {
             frame.addWindowListener(new WindowsHandler());
         } else if(eventType == MouseEvent.class) {
-            frame.addMouseListener(new MouseHandler());
+            frame.getComponent(0).addMouseListener(new MouseHandler());
         } else if(eventType == KeyEvent.class) {
             frame.addKeyListener(new KeyHandler());
         }
