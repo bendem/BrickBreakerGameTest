@@ -31,13 +31,7 @@ public class Circle extends BaseShape implements Translatable {
     }
 
     @Override
-    public void draw(Graphics graphics) {
-        graphics.setColor(color);
-        if(filled) {
-            graphics.fillOval(center.getA() - radius, center.getB() - radius, radius * 2, radius * 2);
-        } else {
-            graphics.drawOval(center.getA() - radius, center.getB() - radius, radius * 2, radius * 2);
-        }
+    public void draw() {
     }
 
     @Override

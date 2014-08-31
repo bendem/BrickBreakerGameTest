@@ -4,8 +4,6 @@ import be.bendem.gametest.core.graphics.Drawable;
 import be.bendem.gametest.core.graphics.Point;
 import be.bendem.gametest.core.graphics.Translatable;
 
-import java.awt.Graphics;
-
 /**
  * @author bendem
  */
@@ -20,8 +18,7 @@ public class Line implements Drawable, Translatable {
     }
 
     @Override
-    public void draw(Graphics graphics) {
-        graphics.drawLine(start.getA(), start.getB(), end.getA(), end.getB());
+    public void draw() {
     }
 
     @Override

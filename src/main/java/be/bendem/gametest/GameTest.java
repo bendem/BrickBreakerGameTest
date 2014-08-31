@@ -7,9 +7,15 @@ import be.bendem.gametest.core.events.EventManager;
 import be.bendem.gametest.core.events.InternalEvent;
 import be.bendem.gametest.core.graphics.Graphics;
 import be.bendem.gametest.core.logging.Logger;
+import org.lwjgl.LWJGLException;
+import org.lwjgl.opengl.ContextCapabilities;
+import org.lwjgl.opengl.Display;
+import org.lwjgl.opengl.GLContext;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Iterator;
+import java.util.LinkedList;
 
 /**
  * @author bendem
@@ -35,7 +41,7 @@ public class GameTest implements Killable {
 
     private void start() {
         Logger.debug("GameTest started");
-        graphics.show();
+        graphics.start();
         engine.start();
     }
 
@@ -75,6 +81,36 @@ public class GameTest implements Killable {
     }
 
     public static void main(String[] args) {
+        /*try {
+            Logger.debug("Creating lwjgl context");
+            Display.create();
+        } catch(LWJGLException e) {
+            Logger.error("Failed to create GL context", e);
+        }
+        Logger.debug("Aknowledging capabilitites");
+        ContextCapabilities capabilities = GLContext.getCapabilities();
+        Logger.debug("OpenGL11: " + capabilities.OpenGL11);
+        Logger.debug("OpenGL12: " + capabilities.OpenGL12);
+        Logger.debug("OpenGL13: " + capabilities.OpenGL13);
+        Logger.debug("OpenGL14: " + capabilities.OpenGL14);
+        Logger.debug("OpenGL15: " + capabilities.OpenGL15);
+        Logger.debug("OpenGL20: " + capabilities.OpenGL20);
+        Logger.debug("OpenGL21: " + capabilities.OpenGL21);
+        Logger.debug("OpenGL30: " + capabilities.OpenGL30);
+        Logger.debug("OpenGL31: " + capabilities.OpenGL31);
+        Logger.debug("OpenGL32: " + capabilities.OpenGL32);
+        Logger.debug("OpenGL33: " + capabilities.OpenGL33);
+        Logger.debug("OpenGL40: " + capabilities.OpenGL40);
+        Logger.debug("OpenGL41: " + capabilities.OpenGL41);
+        Logger.debug("OpenGL42: " + capabilities.OpenGL42);
+        Logger.debug("OpenGL43: " + capabilities.OpenGL43);
+        Logger.debug("OpenGL44: " + capabilities.OpenGL44);
+
+        if(!capabilities.OpenGL31) {
+            Logger.error("OpenGL31 not available, abort mission :O");
+            return;
+        }*/
+
         Iterator<String> iterator = Arrays.asList(args).iterator();
         String configFilename = "./config.cfg";
         while(iterator.hasNext()) {

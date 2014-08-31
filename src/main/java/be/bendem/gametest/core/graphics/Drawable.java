@@ -5,6 +5,6 @@ package be.bendem.gametest.core.graphics;
  */
 public interface Drawable {
 
-    public void draw(java.awt.Graphics graphics);
+    public void draw();
 
 }

@@ -2,9 +2,12 @@ package be.bendem.gametest.core.graphics.shapes;
 
 import be.bendem.gametest.core.graphics.Point;
 import be.bendem.gametest.core.graphics.Translatable;
+import org.lwjgl.BufferUtils;
+import org.lwjgl.opengl.*;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.nio.FloatBuffer;
 
 /**
  * @author bendem
@@ -75,13 +78,36 @@ public class Rectangle extends BaseShape implements Translatable {
     }
 
     @Override
-    public void draw(Graphics graphics) {
-        graphics.setColor(color);
-        if(filled) {
-            graphics.fillRect(corner.getA(), corner.getB(), width, height);
-        } else {
-            graphics.drawRect(corner.getA(), corner.getB(), width, height);
-        }
+    public void draw() {
+        FloatBuffer vertices = BufferUtils.createFloatBuffer(8);
+        vertices.put(new float[] {
+            corner.getA(),         corner.getB(),
+            corner.getA() + width, corner.getB(),
+            corner.getA(),         corner.getB() + height,
+            corner.getA() + width, corner.getB() + height
+        }).rewind();
+
+        GL11.glBegin(GL11.GL_TRIANGLES);
+            GL11.glVertexPointer(8, 1, vertices);
+        GL11.glEnd();
+
+/*
+        shader = new ShaderProgram();
+
+        // Create a VAO
+        GL20.glGenVertexArrays();
+        glBindVertexArray(vaoID);
+
+        // Create a VBO
+        vboID = glGenBuffers();
+        glBindBuffer(GL_ARRAY_BUFFER, vboID);
+        glBufferData(GL_ARRAY_BUFFER, vertices, GL_STATIC_DRAW);
+
+        // Set the pointers in the VAO
+        glVertexAttribPointer(0, 2, GL_FLOAT, false, 0, 0);
+
+        // Unbind the VAO
+        glBindVertexArray(0);*/
     }
 
     @Override
