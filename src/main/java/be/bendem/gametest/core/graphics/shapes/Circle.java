@@ -1,7 +1,6 @@
 package be.bendem.gametest.core.graphics.shapes;
 
 import be.bendem.gametest.core.graphics.Point;
-import be.bendem.gametest.core.graphics.Translatable;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -9,7 +8,7 @@ import java.awt.Graphics;
 /**
  * @author bendem
  */
-public class Circle extends BaseShape implements Translatable {
+public class Circle extends BaseShape {
 
     private final Point center;
     private int radius;
@@ -55,6 +54,12 @@ public class Circle extends BaseShape implements Translatable {
 
     public void setRadius(int radius) {
         this.radius = radius;
+    }
+
+    @Override
+    public Rectangle getBoundingBox() {
+        Point corner = new Point(center.getA() - radius, center.getB() - radius);
+        return new Rectangle(corner, radius * 2, radius * 2);
     }
 
 }

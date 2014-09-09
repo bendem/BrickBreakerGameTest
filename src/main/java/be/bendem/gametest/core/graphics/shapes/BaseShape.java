@@ -1,11 +1,11 @@
 package be.bendem.gametest.core.graphics.shapes;
 
-import be.bendem.gametest.core.graphics.Drawable;
+import be.bendem.gametest.core.graphics.DrawableShape;
 
 /**
  * @author bendem
  */
-public abstract class BaseShape implements Drawable {
+public abstract class BaseShape implements DrawableShape {
 
     protected boolean filled;
 

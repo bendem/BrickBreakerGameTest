@@ -1,8 +1,7 @@
 package be.bendem.gametest.core.graphics.shapes;
 
-import be.bendem.gametest.core.graphics.Drawable;
+import be.bendem.gametest.core.graphics.DrawableShape;
 import be.bendem.gametest.core.graphics.Point;
-import be.bendem.gametest.core.graphics.Translatable;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -10,7 +9,7 @@ import java.awt.Graphics;
 /**
  * @author bendem
  */
-public class Line implements Drawable, Translatable {
+public class Line implements DrawableShape {
 
     private final Point start;
     private final Point end;
@@ -44,6 +43,11 @@ public class Line implements Drawable, Translatable {
     public void translate(int x, int y) {
         start.translate(x, y);
         end.translate(x, y);
+    }
+
+    @Override
+    public Rectangle getBoundingBox() {
+        return new Rectangle(start, end.getA(), end.getB());
     }
 
 }

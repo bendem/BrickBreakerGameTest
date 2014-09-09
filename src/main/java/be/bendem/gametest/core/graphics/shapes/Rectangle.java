@@ -1,7 +1,6 @@
 package be.bendem.gametest.core.graphics.shapes;
 
 import be.bendem.gametest.core.graphics.Point;
-import be.bendem.gametest.core.graphics.Translatable;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -9,7 +8,7 @@ import java.awt.Graphics;
 /**
  * @author bendem
  */
-public class Rectangle extends BaseShape implements Translatable {
+public class Rectangle extends BaseShape {
 
     private final Point corner;
     private int width;
@@ -87,6 +86,11 @@ public class Rectangle extends BaseShape implements Translatable {
     @Override
     public void translate(int x, int y) {
         corner.translate(x, y);
+    }
+
+    @Override
+    public Rectangle getBoundingBox() {
+        return this;
     }
 
 }
