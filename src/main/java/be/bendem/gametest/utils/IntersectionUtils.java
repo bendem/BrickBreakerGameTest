@@ -2,6 +2,7 @@ package be.bendem.gametest.utils;
 
 import be.bendem.gametest.core.graphics.Point;
 import be.bendem.gametest.core.graphics.shapes.Circle;
+import be.bendem.gametest.core.graphics.shapes.Line;
 import be.bendem.gametest.core.graphics.shapes.Rectangle;
 
 /**
@@ -32,6 +33,10 @@ public class IntersectionUtils {
         int cornerDistance = circleDistance.getA() - rect.getWidth()/2^2 + circleDistance.getB() - rect.getHeight()/2^2;
 
         return cornerDistance <= (circle.getRadius()^2);*/
+    }
+
+    public static boolean doIntersect(Rectangle rekt, Line line) {
+        return doIntersect(rekt, new Rectangle(line.getStart(), line.getEnd().getA(), line.getEnd().getB()));
     }
 
     public static boolean doIntersect(Rectangle rekt1, Rectangle rekt2) {

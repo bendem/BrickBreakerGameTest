@@ -5,18 +5,13 @@ import be.bendem.gametest.core.Killable;
 import be.bendem.gametest.core.events.Callback;
 import be.bendem.gametest.core.events.EventManager;
 import be.bendem.gametest.core.events.InternalEvent;
-import be.bendem.gametest.core.events.awt.events.InternalMouseEvent;
 import be.bendem.gametest.core.events.awt.events.KeyPressedEvent;
 import be.bendem.gametest.core.events.awt.events.KeyReleasedEvent;
-import be.bendem.gametest.core.events.awt.events.MouseClickedEvent;
 import be.bendem.gametest.core.events.awt.events.MousePressedEvent;
 import be.bendem.gametest.core.events.awt.events.WindowClosingEvent;
 import be.bendem.gametest.core.graphics.shapes.Rectangle;
-import be.bendem.gametest.core.graphics.windows.GameFrame;
-import be.bendem.gametest.core.logging.Logger;
 
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
 
 /**
  * TODO Check collisions
@@ -35,7 +30,7 @@ public class GameEngine implements Killable {
         PLATEFORM_DISTANCE = game.getConfig().getInt("engine.plateform.distance", 15);
 
         this.game = game;
-        this.plateform = game.getGraphics().createPlaterform();
+        this.plateform = game.getGraphics().createPlateform();
         this.ballMovement = new BallMovement(game, plateform, game.getGraphics().createBall());
     }
 
@@ -62,10 +57,10 @@ public class GameEngine implements Killable {
     }
 
     private void moveRight(int distance) {
-        if(plateform.getCorner().getA() + plateform.getWidth() + distance < GameFrame.WIDTH - 5) {
+        if(plateform.getCorner().getA() + plateform.getWidth() + distance < game.getGraphics().WIDTH - 5) {
             plateform.translate(distance, 0);
         } else {
-            plateform.getCorner().setA(GameFrame.WIDTH - plateform.getWidth() - 5);
+            plateform.getCorner().setA(game.getGraphics().WIDTH - plateform.getWidth() - 5);
         }
     }
 

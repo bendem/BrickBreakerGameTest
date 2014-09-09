@@ -1,11 +1,11 @@
 package be.bendem.gametest.core.graphics.windows;
 
-import be.bendem.gametest.GameTest;
 import be.bendem.gametest.core.Killable;
+import be.bendem.gametest.core.events.EventManager;
+import be.bendem.gametest.core.events.InternalEvent;
+import be.bendem.gametest.core.graphics.Graphics;
 import be.bendem.gametest.core.graphics.Point;
-import be.bendem.gametest.core.graphics.shapes.Circle;
 import be.bendem.gametest.core.graphics.shapes.Line;
-import be.bendem.gametest.core.graphics.shapes.Rectangle;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -15,44 +15,19 @@ import java.awt.Dimension;
  */
 public class GameFrame extends BaseFrame implements Killable {
 
-    public static final int WIDTH = 800;
-    public static final int HEIGHT = 500;
+    public GameFrame(EventManager<InternalEvent> manager, Graphics graphics, int width, int height) {
+        super("Game Test", manager, graphics, new Dimension(width, height), Color.BLACK);
 
-    public static final int RECTANGLE_WIDTH = 80;
-    public static final int RECTANGLE_HEIGHT = 10;
-
-    public GameFrame(GameTest game) {
-        super("Game Test", game);
-        panel.setPreferredSize(new Dimension(WIDTH, HEIGHT));
-        panel.setBackground(Color.BLACK);
-
-        objects.add(new Line(new Point(0, HEIGHT / 2), new Point(WIDTH, HEIGHT / 2)));
-        objects.add(new Line(new Point(WIDTH / 2, 0), new Point(WIDTH / 2, HEIGHT)));
+        // Border of the screen
+        objects.add(new Line(new Point(0, 0), new Point(0, height)));
+        objects.add(new Line(new Point(0, 0), new Point(width, 0)));
+        // WIDTH-1 because why not
+        objects.add(new Line(new Point(width-1, 0), new Point(width-1, height)));
     }
 
     @Override
     public void kill() {
         dispose();
-    }
-
-    public Rectangle createPlateform() {
-        Rectangle plateform = new Rectangle(
-            new Point(
-                WIDTH / 2 - RECTANGLE_WIDTH / 2,
-                HEIGHT - RECTANGLE_HEIGHT - 5
-            ),
-            RECTANGLE_WIDTH,
-            RECTANGLE_HEIGHT,
-            true
-        );
-        objects.add(plateform);
-        return plateform;
-    }
-
-    public Circle createBall() {
-        Circle circle = new Circle(new Point(WIDTH / 2, HEIGHT / 2), 7, true, Color.LIGHT_GRAY);
-        objects.add(circle);
-        return circle;
     }
 
 }

@@ -1,46 +1,45 @@
 package be.bendem.gametest.core.graphics.windows;
 
-import be.bendem.gametest.GameTest;
 import be.bendem.gametest.core.events.EventManager;
 import be.bendem.gametest.core.events.InternalEvent;
 import be.bendem.gametest.core.events.awt.AwtEventAdapter;
 import be.bendem.gametest.core.graphics.Drawable;
+import be.bendem.gametest.core.graphics.Graphics;
 
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Frame;
-import java.awt.Graphics;
 import java.awt.Panel;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.LinkedHashSet;
 
 /**
  * @author bendem
  */
 public abstract class BaseFrame extends Frame {
 
-    protected final Panel panel;
     protected final Collection<Drawable> objects;
+    protected final Panel panel;
 
-    public BaseFrame(String title, GameTest game) {
+    public BaseFrame(String title, EventManager<InternalEvent> manager, Graphics graphics, Dimension dimensions, Color color) {
         super(title);
+        objects = graphics.getObjects();
 
         setUndecorated(true);
 
         panel = new Panel() {
             @Override
-            public void paint(Graphics graphics) {
+            public void paint(java.awt.Graphics graphics) {
                 // Call to super makes sure to handle the opaque background
                 super.paint(graphics);
                 draw(graphics);
             }
         };
         panel.setFocusable(false);
+        panel.setPreferredSize(dimensions);
+        panel.setBackground(color);
         add(panel);
 
-        // TODO See if another collection might not be better
-        objects = Collections.synchronizedSet(new LinkedHashSet<>());
-
-        new AwtEventAdapter(game.getEventManager()).registerAllEvents(this);
+        new AwtEventAdapter(manager).registerAllEvents(this);
     }
 
     public void display() {
@@ -53,7 +52,7 @@ public abstract class BaseFrame extends Frame {
         panel.update(panel.getGraphics());
     }
 
-    private void draw(Graphics graphics) {
+    private void draw(java.awt.Graphics graphics) {
         objects.forEach(object -> object.draw(graphics.create()));
     }
 
