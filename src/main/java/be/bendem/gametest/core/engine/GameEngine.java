@@ -49,6 +49,7 @@ public class GameEngine implements Killable {
     }
 
     private void moveLeft(int distance) {
+        // FIXME If the plateform is moved into the ball, the ball can't free itself
         if(plateform.getCorner().getA() > 5 + distance) {
             plateform.translate(-distance, 0);
         } else {
@@ -57,6 +58,7 @@ public class GameEngine implements Killable {
     }
 
     private void moveRight(int distance) {
+        // FIXME If the plateform is moved into the ball, the ball can't free itself
         if(plateform.getCorner().getA() + plateform.getWidth() + distance < game.getGraphics().WIDTH - 5) {
             plateform.translate(distance, 0);
         } else {
