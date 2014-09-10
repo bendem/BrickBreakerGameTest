@@ -53,7 +53,7 @@ public class Line implements GraphicObject {
 
     @Override
     public Rectangle getBoundingBox() {
-        return new Rectangle(start, end.getA(), end.getB());
+        return new Rectangle(start, end.getA() - start.getA(), end.getB() - start.getB());
     }
 
     public boolean isSolid() {
@@ -62,6 +62,16 @@ public class Line implements GraphicObject {
 
     public void setSolid(boolean solid) {
         this.solid = solid;
+    }
+
+    @Override
+    public String toString() {
+        return "Line{" +
+            "start=" + start +
+            ", end=" + end +
+            ", color=" + color +
+            ", solid=" + solid +
+            '}';
     }
 
 }

@@ -31,7 +31,7 @@ public class GameEngine implements Killable {
 
         this.game = game;
         this.plateform = game.getGraphics().createPlateform();
-        this.ballMovement = new BallMovement(game, plateform, game.getGraphics().createBall());
+        this.ballMovement = new BallMovement(game, game.getGraphics().createBall());
     }
 
     public void start() {

@@ -93,4 +93,14 @@ public class Rectangle extends BaseShape {
         return this;
     }
 
+    @Override
+    public String toString() {
+        return "Rectangle{" +
+            "corner=" + corner +
+            ", width=" + width +
+            ", height=" + height +
+            ", color=" + color +
+            '}';
+    }
+
 }
