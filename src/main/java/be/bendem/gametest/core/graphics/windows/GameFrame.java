@@ -19,10 +19,9 @@ public class GameFrame extends BaseFrame implements Killable {
         super("Game Test", manager, graphics, new Dimension(width, height), Color.BLACK);
 
         // Border of the screen
-        objects.add(new Line(new Point(0, 0), new Point(0, height)));
-        objects.add(new Line(new Point(0, 0), new Point(width, 0)));
-        // WIDTH-1 because why not
-        objects.add(new Line(new Point(width-1, 0), new Point(width-1, height)));
+        objects.add(new Line(new Point(0, 0), new Point(0, height), true));
+        objects.add(new Line(new Point(0, 0), new Point(width, 0), true));
+        objects.add(new Line(new Point(width-1, 0), new Point(width-1, height), true)); // width-1 because why not
     }
 
     @Override

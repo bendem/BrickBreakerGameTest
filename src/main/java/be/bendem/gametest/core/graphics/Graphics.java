@@ -24,7 +24,7 @@ public class Graphics implements Killable {
     public final int PLATEFORM_WIDTH;
     public final int PLATEFORM_HEIGHT;
 
-    private final Collection<DrawableShape> objects;
+    private final Collection<GraphicObject> objects;
     private final GameFrame frame;
     private final RepeatingTask graphicsUpdater;
 
@@ -75,7 +75,7 @@ public class Graphics implements Killable {
         return circle;
     }
 
-    public Collection<DrawableShape> getObjects() {
+    public Collection<GraphicObject> getObjects() {
         return objects;
     }
 }

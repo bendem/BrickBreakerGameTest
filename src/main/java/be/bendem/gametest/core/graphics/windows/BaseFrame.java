@@ -3,7 +3,7 @@ package be.bendem.gametest.core.graphics.windows;
 import be.bendem.gametest.core.events.EventManager;
 import be.bendem.gametest.core.events.InternalEvent;
 import be.bendem.gametest.core.events.awt.AwtEventAdapter;
-import be.bendem.gametest.core.graphics.DrawableShape;
+import be.bendem.gametest.core.graphics.GraphicObject;
 import be.bendem.gametest.core.graphics.Graphics;
 
 import java.awt.Color;
@@ -17,7 +17,7 @@ import java.util.Collection;
  */
 public abstract class BaseFrame extends Frame {
 
-    protected final Collection<DrawableShape> objects;
+    protected final Collection<GraphicObject> objects;
     protected final Panel panel;
 
     public BaseFrame(String title, EventManager<InternalEvent> manager, Graphics graphics, Dimension dimensions, Color color) {
