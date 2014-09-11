@@ -13,4 +13,12 @@ public interface GraphicObject extends Drawable, Translatable, Intersectable {
      */
     public boolean isSolid();
 
+    /**
+     * Defines wether the object is broken when intersecting with another one.
+     *
+     * @return true if the object breaks when colliding with another one, false
+     *         otherwise
+     */
+    public boolean isBreakable();
+
 }

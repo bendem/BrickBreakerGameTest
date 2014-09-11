@@ -66,6 +66,11 @@ public class Line implements GraphicObject {
     }
 
     @Override
+    public boolean isBreakable() {
+        return false;
+    }
+
+    @Override
     public String toString() {
         return "Line{" +
             "start=" + start +

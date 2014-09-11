@@ -9,6 +9,7 @@ import be.bendem.gametest.core.events.awt.events.KeyPressedEvent;
 import be.bendem.gametest.core.events.awt.events.KeyReleasedEvent;
 import be.bendem.gametest.core.events.awt.events.MousePressedEvent;
 import be.bendem.gametest.core.events.awt.events.WindowClosingEvent;
+import be.bendem.gametest.core.graphics.Graphics;
 import be.bendem.gametest.core.graphics.shapes.Rectangle;
 
 import java.awt.event.KeyEvent;
@@ -30,8 +31,10 @@ public class GameEngine implements Killable {
         PLATEFORM_DISTANCE = game.getConfig().getInt("engine.plateform.distance", 15);
 
         this.game = game;
-        this.plateform = game.getGraphics().createPlateform();
-        this.ballMovement = new BallMovement(game, game.getGraphics().createBall());
+        Graphics graphics = game.getGraphics();
+        this.plateform = graphics.createPlateform();
+        this.ballMovement = new BallMovement(game, graphics.createBall());
+        graphics.getObjects().addAll(graphics.createBricks());
     }
 
     public void start() {

@@ -63,4 +63,9 @@ public class Circle extends BaseShape {
         return new BoundingBox(corner, radius * 2, radius * 2);
     }
 
+    @Override
+    public boolean isBreakable() {
+        return false;
+    }
+
 }

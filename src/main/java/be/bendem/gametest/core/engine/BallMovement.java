@@ -39,7 +39,8 @@ public class BallMovement implements Killable {
                 .findAny();
 
         if(optionalObject.isPresent()) {
-            Direction collisionDirection = handleCollision(optionalObject.get());
+            GraphicObject object = optionalObject.get();
+            Direction collisionDirection = handleCollision(object);
             if(collisionDirection == null) {
                 throw new AssertionError("The object we collided with does not intersect with the ball :(");
             }
@@ -56,6 +57,9 @@ public class BallMovement implements Killable {
                     break;
                 default:
                     throw new AssertionError("Unhandled Direction value");
+            }
+            if(object.isBreakable()) {
+                graphics.getObjects().remove(object);
             }
         }
         ball.translate(direction.getX(), direction.getY());

@@ -11,7 +11,9 @@ import be.bendem.gametest.utils.RepeatingTask;
 import java.awt.Color;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -73,6 +75,15 @@ public class Graphics implements Killable {
         Circle circle = new Circle(new Point(WIDTH / 2, HEIGHT / 2), 7, true, Color.LIGHT_GRAY);
         objects.add(circle);
         return circle;
+    }
+
+    public Set<Rectangle> createBricks() {
+        Set<Rectangle> bricks = new HashSet<>();
+        int brickW = (WIDTH - 5) / 5;
+        for(int i = 5; i < WIDTH - 5; i += brickW) {
+            bricks.add(new Rectangle(new Point(i, 5), brickW-5, 20, true, Color.GREEN, true));
+        }
+        return bricks;
     }
 
     public Collection<GraphicObject> getObjects() {

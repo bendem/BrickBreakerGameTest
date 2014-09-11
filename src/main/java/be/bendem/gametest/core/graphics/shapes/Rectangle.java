@@ -1,5 +1,6 @@
 package be.bendem.gametest.core.graphics.shapes;
 
+import be.bendem.gametest.core.graphics.BoundingBox;
 import be.bendem.gametest.core.graphics.Point;
 
 import java.awt.Color;
@@ -14,6 +15,7 @@ public class Rectangle extends BaseShape {
     private int width;
     private int height;
     private final Color color;
+    private boolean breakable;
 
     public Rectangle(Point corner1, Point corner2) {
         this(corner1, corner2, false);
@@ -24,7 +26,7 @@ public class Rectangle extends BaseShape {
     }
 
     public Rectangle(Point corner1, Point corner2, boolean filled, Color color) {
-        this(corner1, corner2.getA() - corner1.getA(), corner2.getB() - corner1.getB(), filled, color);
+        this(corner1, corner2.getA() - corner1.getA(), corner2.getB() - corner1.getB(), filled, color, false);
     }
 
     public Rectangle(Point corner, int width, int height) {
@@ -32,10 +34,10 @@ public class Rectangle extends BaseShape {
     }
 
     public Rectangle(Point corner, int width, int height, boolean filled) {
-        this(corner, width, height, filled, Color.WHITE);
+        this(corner, width, height, filled, Color.WHITE, false);
     }
 
-    public Rectangle(Point corner, int width, int height, boolean filled, Color color) {
+    public Rectangle(Point corner, int width, int height, boolean filled, Color color, boolean breakable) {
         super(filled);
         // Prevents the corner from not being the upper left one
         if(width < 0) {
@@ -51,6 +53,7 @@ public class Rectangle extends BaseShape {
         this.width = width;
         this.height = height;
         this.color = color;
+        this.breakable = breakable;
     }
 
     public Point getCorner() {
@@ -101,6 +104,15 @@ public class Rectangle extends BaseShape {
             ", height=" + height +
             ", color=" + color +
             '}';
+    }
+
+    public void setBreakable(boolean breakable) {
+        this.breakable = breakable;
+    }
+
+    @Override
+    public boolean isBreakable() {
+        return breakable;
     }
 
 }
