@@ -1,5 +1,6 @@
 package be.bendem.gametest.core.graphics.shapes;
 
+import be.bendem.gametest.core.graphics.BoundingBox;
 import be.bendem.gametest.core.graphics.Point;
 
 import java.awt.Color;
@@ -57,9 +58,9 @@ public class Circle extends BaseShape {
     }
 
     @Override
-    public Rectangle getBoundingBox() {
+    public BoundingBox getBoundingBox() {
         Point corner = new Point(center.getA() - radius, center.getB() - radius);
-        return new Rectangle(corner, radius * 2, radius * 2);
+        return new BoundingBox(corner, radius * 2, radius * 2);
     }
 
 }

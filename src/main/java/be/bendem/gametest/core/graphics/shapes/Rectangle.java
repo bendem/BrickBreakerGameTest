@@ -89,8 +89,8 @@ public class Rectangle extends BaseShape {
     }
 
     @Override
-    public Rectangle getBoundingBox() {
-        return this;
+    public BoundingBox getBoundingBox() {
+        return new BoundingBox(corner, width, height);
     }
 
     @Override

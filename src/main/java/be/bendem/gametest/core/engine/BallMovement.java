@@ -2,14 +2,12 @@ package be.bendem.gametest.core.engine;
 
 import be.bendem.gametest.GameTest;
 import be.bendem.gametest.core.Killable;
+import be.bendem.gametest.core.graphics.BoundingBox;
 import be.bendem.gametest.core.graphics.Direction;
 import be.bendem.gametest.core.graphics.GraphicObject;
 import be.bendem.gametest.core.graphics.Graphics;
 import be.bendem.gametest.core.graphics.Vector2D;
 import be.bendem.gametest.core.graphics.shapes.Circle;
-import be.bendem.gametest.core.graphics.shapes.Rectangle;
-import be.bendem.gametest.core.logging.Logger;
-import be.bendem.gametest.utils.IntersectionUtils;
 import be.bendem.gametest.utils.RepeatingTask;
 
 import java.util.Optional;
@@ -33,9 +31,10 @@ public class BallMovement implements Killable {
 
     public void moveBall() {
         // TODO optimize that (i.e. /don't filter everything before finding one/ or /merge filters/ if streams doesn't already do that)
+        BoundingBox ballBoundingBox = ball.getBoundingBox();
         Optional<GraphicObject> optionalObject = graphics.getObjects().stream()
                 .filter(GraphicObject::isSolid)
-                .filter(obj -> IntersectionUtils.doIntersect(ball, obj))
+                .filter(ballBoundingBox::doIntersect)
                 .filter(obj -> obj != ball)
                 .findAny();
 
@@ -63,7 +62,7 @@ public class BallMovement implements Killable {
     }
 
     private Direction handleCollision(GraphicObject object) {
-        Rectangle objectBox = object.getBoundingBox();
+        BoundingBox objectBox = object.getBoundingBox();
         if(direction.getX() > 0 // Going right
                 && ball.getCenter().getA() + ball.getRadius() >= objectBox.getCorner().getA() + objectBox.getWidth()) {
             return Direction.Right;

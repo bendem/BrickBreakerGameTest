@@ -1,5 +1,6 @@
 package be.bendem.gametest.core.graphics.shapes;
 
+import be.bendem.gametest.core.graphics.BoundingBox;
 import be.bendem.gametest.core.graphics.GraphicObject;
 import be.bendem.gametest.core.graphics.Point;
 
@@ -52,8 +53,8 @@ public class Line implements GraphicObject {
     }
 
     @Override
-    public Rectangle getBoundingBox() {
-        return new Rectangle(start, end.getA() - start.getA(), end.getB() - start.getB());
+    public BoundingBox getBoundingBox() {
+        return new BoundingBox(start, end.getA() - start.getA(), end.getB() - start.getB());
     }
 
     public boolean isSolid() {
