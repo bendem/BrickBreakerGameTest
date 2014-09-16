@@ -5,6 +5,7 @@ import be.bendem.gametest.core.events.InternalEvent;
 import be.bendem.gametest.core.events.awt.AwtEventAdapter;
 import be.bendem.gametest.core.graphics.GraphicObject;
 import be.bendem.gametest.core.graphics.Graphics;
+import be.bendem.gametest.core.logging.Logger;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -26,14 +27,7 @@ public abstract class BaseFrame extends Frame {
 
         setUndecorated(true);
 
-        panel = new Panel() {
-            @Override
-            public void paint(java.awt.Graphics graphics) {
-                // Call to super makes sure to handle the opaque background
-                super.paint(graphics);
-                draw(graphics);
-            }
-        };
+        panel = new Panel();
         panel.setFocusable(false);
         panel.setPreferredSize(dimensions);
         panel.setBackground(color);
@@ -49,11 +43,21 @@ public abstract class BaseFrame extends Frame {
     }
 
     public void redraw() {
-        panel.update(panel.getGraphics());
+        java.awt.Graphics graphics = panel.getGraphics();
+
+        if(graphics == null) {
+            // UI isn't loaded
+            return;
+        }
+
+        drawBackgroung(graphics.create());
+
+        objects.forEach(object -> object.draw(graphics.create()));
     }
 
-    private void draw(java.awt.Graphics graphics) {
-        objects.forEach(object -> object.draw(graphics.create()));
+    private void drawBackgroung(java.awt.Graphics graphics) {
+        graphics.setColor(panel.getBackground());
+        graphics.fillRect(0, 0, getWidth(), getHeight());
     }
 
 }
