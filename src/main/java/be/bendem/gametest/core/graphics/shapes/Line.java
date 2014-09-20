@@ -32,7 +32,7 @@ public class Line extends Line2D.Double implements GraphicObject {
     }
 
     @Override
-    public void translate(int x, int y) {
+    public void translate(double x, double y) {
         setLine(x1 + x, y1 + y, x2 + x, y2 + y);
     }
 

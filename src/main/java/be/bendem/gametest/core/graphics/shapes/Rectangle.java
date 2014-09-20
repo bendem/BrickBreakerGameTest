@@ -53,7 +53,7 @@ public class Rectangle extends Rectangle2D.Double implements GraphicObject {
     }
 
     @Override
-    public void translate(int x, int y) {
+    public void translate(double x, double y) {
         setFrame(new Rectangle2D.Double(getX() + x, getY() + y, getWidth(), getHeight()));
     }
 
