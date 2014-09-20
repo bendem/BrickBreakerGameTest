@@ -40,7 +40,7 @@ public class EventManager<E> {
     }
 
     public class PredicateProvider<T extends E> {
-        private List<Predicate<T>> predicates;
+        private final List<Predicate<T>> predicates;
 
         public PredicateProvider() {
             predicates = new LinkedList<>();

@@ -2,14 +2,16 @@ package be.bendem.gametest.core.engine;
 
 import be.bendem.gametest.GameTest;
 import be.bendem.gametest.core.Killable;
-import be.bendem.gametest.core.graphics.BoundingBox;
 import be.bendem.gametest.core.graphics.Direction;
 import be.bendem.gametest.core.graphics.GraphicObject;
 import be.bendem.gametest.core.graphics.Graphics;
 import be.bendem.gametest.core.graphics.Vector2D;
 import be.bendem.gametest.core.graphics.shapes.Circle;
+import be.bendem.gametest.core.logging.Logger;
 import be.bendem.gametest.utils.RepeatingTask;
 
+import java.awt.Rectangle;
+import java.awt.geom.Rectangle2D;
 import java.util.Optional;
 
 /**
@@ -31,16 +33,17 @@ public class BallMovement implements Killable {
 
     public void moveBall() {
         // TODO optimize that (i.e. /don't filter everything before finding one/ or /merge filters/ if streams doesn't already do that)
-        BoundingBox ballBoundingBox = ball.getBoundingBox();
+        Rectangle2D ballBoundingBox = ball.getBounds2D();
         Optional<GraphicObject> optionalObject = graphics.getObjects().stream()
                 .filter(GraphicObject::isSolid)
-                .filter(ballBoundingBox::doIntersect)
                 .filter(obj -> obj != ball)
+                .filter(object -> object.intersects(ballBoundingBox))
                 .findAny();
 
         if(optionalObject.isPresent()) {
             GraphicObject object = optionalObject.get();
             Direction collisionDirection = handleCollision(object);
+            Logger.debug("Collided with " + object);
             if(collisionDirection == null) {
                 throw new AssertionError("The object we collided with does not intersect with the ball :(");
             }
@@ -66,21 +69,21 @@ public class BallMovement implements Killable {
     }
 
     private Direction handleCollision(GraphicObject object) {
-        BoundingBox objectBox = object.getBoundingBox();
+        Rectangle objectBox = object.getBounds();
         if(direction.getX() > 0 // Going right
-                && ball.getCenter().getA() + ball.getRadius() >= objectBox.getCorner().getA() + objectBox.getWidth()) {
+                && ball.getMaxX() >= objectBox.getMinX()) {
             return Direction.Right;
         }
         if(direction.getX() < 0 // Going left
-                && ball.getCenter().getA() - ball.getRadius() <= objectBox.getCorner().getA()) {
+                && ball.getMinX() <= objectBox.getMaxX()) {
             return Direction.Left;
         }
         if(direction.getY() > 0 // Going down
-                && ball.getCenter().getB() + ball.getRadius() >= objectBox.getCorner().getB()) {
+                && ball.getMaxY() >= objectBox.getMinY()) {
             return Direction.Down;
         }
         if(direction.getY() < 0 // Going up
-                && ball.getCenter().getB() - ball.getRadius() <= objectBox.getCorner().getB() + objectBox.getHeight()) {
+                && ball.getMinY() <= objectBox.getMaxY()) {
             return Direction.Up;
         }
         return null;

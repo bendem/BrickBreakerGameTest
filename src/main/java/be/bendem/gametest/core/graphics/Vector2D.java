@@ -2,17 +2,15 @@ package be.bendem.gametest.core.graphics;
 
 import be.bendem.gametest.utils.Tuple;
 
+import java.awt.Point;
+
 /**
  * @author bendem
  */
 public final class Vector2D extends Tuple<Point, Point> implements Cloneable {
 
     public Vector2D(int x, int y) {
-        this(Point.zero(), new Point(x, y));
-    }
-
-    public Vector2D(Point end) {
-        this(Point.zero(), end);
+        this(new Point(0, 0), new Point(x, y));
     }
 
     public Vector2D(Point start, Point end) {
@@ -20,34 +18,34 @@ public final class Vector2D extends Tuple<Point, Point> implements Cloneable {
     }
 
     public void nullifyStart() {
-        int x1 = getA().getA();
+        int x1 = getA().x;
         if(x1 != 0) {
-            getB().setA(0 - x1 + getB().getA());
+            getB().x = 0 - x1 + getB().x;
         }
-        int y1 = getA().getB();
+        int y1 = getA().y;
         if(y1 != 0) {
-            getB().setB(0 - y1 + getB().getB());
+            getB().y = 0 - y1 + getB().y;
         }
     }
 
     public int getX() {
         nullifyStart();
-        return getB().getA();
+        return getB().x;
     }
 
     public int getY() {
         nullifyStart();
-        return getB().getB();
+        return getB().y;
     }
 
     public void setX(int x) {
         nullifyStart();
-        getB().setA(x);
+        getB().x = x;
     }
 
     public void setY(int y) {
         nullifyStart();
-        getB().setB(y);
+        getB().y = y;
     }
 
     @Override

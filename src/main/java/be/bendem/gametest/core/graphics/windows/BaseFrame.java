@@ -5,11 +5,11 @@ import be.bendem.gametest.core.events.InternalEvent;
 import be.bendem.gametest.core.events.awt.AwtEventAdapter;
 import be.bendem.gametest.core.graphics.GraphicObject;
 import be.bendem.gametest.core.graphics.Graphics;
-import be.bendem.gametest.core.logging.Logger;
 
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Frame;
+import java.awt.Graphics2D;
 import java.awt.Panel;
 import java.util.Collection;
 
@@ -43,7 +43,7 @@ public abstract class BaseFrame extends Frame {
     }
 
     public void redraw() {
-        java.awt.Graphics graphics = panel.getGraphics();
+        Graphics2D graphics = ((Graphics2D) panel.getGraphics());
 
         if(graphics == null) {
             // UI isn't loaded
@@ -52,7 +52,7 @@ public abstract class BaseFrame extends Frame {
 
         drawBackgroung(graphics.create());
 
-        objects.forEach(object -> object.draw(graphics.create()));
+        objects.forEach(object -> object.draw((Graphics2D) graphics.create()));
     }
 
     private void drawBackgroung(java.awt.Graphics graphics) {

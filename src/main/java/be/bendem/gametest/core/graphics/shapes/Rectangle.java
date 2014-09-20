@@ -1,118 +1,92 @@
 package be.bendem.gametest.core.graphics.shapes;
 
-import be.bendem.gametest.core.graphics.BoundingBox;
-import be.bendem.gametest.core.graphics.Point;
+import be.bendem.gametest.core.graphics.GraphicObject;
 
 import java.awt.Color;
-import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 
 /**
  * @author bendem
  */
-public class Rectangle extends BaseShape {
+public class Rectangle extends Rectangle2D.Double implements GraphicObject {
 
-    private final Point corner;
-    private int width;
-    private int height;
+    private final boolean filled;
     private final Color color;
-    private boolean breakable;
+    private final boolean breakable;
 
-    public Rectangle(Point corner1, Point corner2) {
-        this(corner1, corner2, false);
+    public Rectangle(Point2D corner, int width, int height, boolean filled, Color color) {
+        this(corner, width, height, filled, color, false);
     }
 
-    public Rectangle(Point corner1, Point corner2, boolean filled) {
-        this(corner1, corner2, filled, Color.WHITE);
-    }
-
-    public Rectangle(Point corner1, Point corner2, boolean filled, Color color) {
-        this(corner1, corner2.getA() - corner1.getA(), corner2.getB() - corner1.getB(), filled, color, false);
-    }
-
-    public Rectangle(Point corner, int width, int height) {
-        this(corner, width, height, false);
-    }
-
-    public Rectangle(Point corner, int width, int height, boolean filled) {
-        this(corner, width, height, filled, Color.WHITE, false);
-    }
-
-    public Rectangle(Point corner, int width, int height, boolean filled, Color color, boolean breakable) {
-        super(filled);
+    public Rectangle(Point2D corner, int width, int height, boolean filled, Color color, boolean breakable) {
         // Prevents the corner from not being the upper left one
+        double x = corner.getX();
+        double y = corner.getY();
         if(width < 0) {
             width = -width;
-            corner.setA(corner.getA() - width);
+            x = corner.getX() - width;
         }
         if(height < 0) {
             height = -height;
-            corner.setB(corner.getB() - height);
         }
+        setFrame(x, y, width, height);
 
-        this.corner = corner;
-        this.width = width;
-        this.height = height;
+        this.filled = filled;
         this.color = color;
         this.breakable = breakable;
     }
 
-    public Point getCorner() {
-        return corner;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
-    public void setWidth(int width) {
-        this.width = width;
-    }
-
-    public void setHeight(int height) {
-        this.height = height;
+    public Point2D getCorner() {
+        return new Point2D.Double(getMinX(), getMinY());
     }
 
     @Override
-    public void draw(Graphics graphics) {
+    public void draw(Graphics2D graphics) {
         graphics.setColor(color);
         if(filled) {
-            graphics.fillRect(corner.getA(), corner.getB(), width, height);
+            graphics.fill(this);
         } else {
-            graphics.drawRect(corner.getA(), corner.getB(), width, height);
+            graphics.draw(this);
         }
     }
 
     @Override
     public void translate(int x, int y) {
-        corner.translate(x, y);
+        setFrame(new Rectangle2D.Double(getX() + x, getY() + y, getWidth(), getHeight()));
     }
 
+    /**
+     * Defines wether the object is solid or not (used in the collision checks).
+     *
+     * @return true if other object should collide with this one, false
+     * otherwise
+     */
     @Override
-    public BoundingBox getBoundingBox() {
-        return new BoundingBox(corner, width, height);
+    public boolean isSolid() {
+        return true;
+    }
+
+    /**
+     * Defines wether the object is broken when intersecting with another one.
+     *
+     * @return true if the object breaks when colliding with another one, false
+     * otherwise
+     */
+    @Override
+    public boolean isBreakable() {
+        return breakable;
     }
 
     @Override
     public String toString() {
         return "Rectangle{" +
-            "corner=" + corner +
+            "corner=" + getCorner() +
             ", width=" + width +
             ", height=" + height +
             ", color=" + color +
             '}';
-    }
-
-    public void setBreakable(boolean breakable) {
-        this.breakable = breakable;
-    }
-
-    @Override
-    public boolean isBreakable() {
-        return breakable;
     }
 
 }

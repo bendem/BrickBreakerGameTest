@@ -4,11 +4,11 @@ import be.bendem.gametest.core.Killable;
 import be.bendem.gametest.core.events.EventManager;
 import be.bendem.gametest.core.events.InternalEvent;
 import be.bendem.gametest.core.graphics.Graphics;
-import be.bendem.gametest.core.graphics.Point;
 import be.bendem.gametest.core.graphics.shapes.Line;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Point;
 
 /**
  * @author bendem

@@ -1,9 +1,11 @@
 package be.bendem.gametest.core.graphics;
 
+import java.awt.Shape;
+
 /**
  * @author bendem
  */
-public interface GraphicObject extends Drawable, Translatable, Intersectable {
+public interface GraphicObject extends Drawable, Translatable, Shape {
 
     /**
      * Defines wether the object is solid or not (used in the collision checks).

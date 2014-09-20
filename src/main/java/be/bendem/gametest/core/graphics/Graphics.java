@@ -9,6 +9,7 @@ import be.bendem.gametest.core.logging.Logger;
 import be.bendem.gametest.utils.RepeatingTask;
 
 import java.awt.Color;
+import java.awt.geom.Point2D;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -59,20 +60,21 @@ public class Graphics implements Killable {
 
     public Rectangle createPlateform() {
         Rectangle plateform = new Rectangle(
-            new Point(
+            new Point2D.Double(
                 WIDTH / 2 - PLATEFORM_WIDTH / 2,
                 HEIGHT - PLATEFORM_HEIGHT - 5
             ),
             PLATEFORM_WIDTH,
             PLATEFORM_HEIGHT,
-            true
+            true,
+            Color.WHITE
         );
         objects.add(plateform);
         return plateform;
     }
 
     public Circle createBall() {
-        Circle circle = new Circle(new Point(WIDTH / 2, HEIGHT / 2), 7, true, Color.LIGHT_GRAY);
+        Circle circle = new Circle(new Point2D.Double(WIDTH / 2, HEIGHT / 2), 7, true, Color.LIGHT_GRAY);
         objects.add(circle);
         return circle;
     }
@@ -81,7 +83,7 @@ public class Graphics implements Killable {
         Set<Rectangle> bricks = new HashSet<>();
         int brickW = (WIDTH - 5) / 5;
         for(int i = 5; i < WIDTH - 5; i += brickW) {
-            bricks.add(new Rectangle(new Point(i, 5), brickW-5, 20, true, Color.GREEN, true));
+            bricks.add(new Rectangle(new Point2D.Double(i, 5), brickW-5, 20, true, Color.GREEN, true));
         }
         return bricks;
     }

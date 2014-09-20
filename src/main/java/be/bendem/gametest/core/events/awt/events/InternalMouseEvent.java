@@ -1,8 +1,8 @@
 package be.bendem.gametest.core.events.awt.events;
 
 import be.bendem.gametest.core.events.InternalEvent;
-import be.bendem.gametest.core.graphics.Point;
 
+import java.awt.Point;
 import java.awt.event.MouseEvent;
 
 /**

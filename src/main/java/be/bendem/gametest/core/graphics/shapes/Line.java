@@ -1,68 +1,43 @@
 package be.bendem.gametest.core.graphics.shapes;
 
-import be.bendem.gametest.core.graphics.BoundingBox;
 import be.bendem.gametest.core.graphics.GraphicObject;
-import be.bendem.gametest.core.graphics.Point;
 
 import java.awt.Color;
-import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.geom.Line2D;
 
 /**
  * @author bendem
  */
-public class Line implements GraphicObject {
+public class Line extends Line2D.Double implements GraphicObject {
 
-    private final Point start;
-    private final Point end;
     private final Color color;
-    private boolean solid;
-
-    public Line(Point start, Point end) {
-        this(start, end, false);
-    }
+    private final boolean solid;
 
     public Line(Point start, Point end, boolean solid) {
         this(start, end, Color.DARK_GRAY, solid);
     }
 
     public Line(Point start, Point end, Color color, boolean solid) {
-        this.start = start;
-        this.end = end;
+        super(start, end);
         this.color = color;
         this.solid = solid;
     }
 
-    public Point getStart() {
-        return start;
-    }
-
-    public Point getEnd() {
-        return end;
-    }
-
     @Override
-    public void draw(Graphics graphics) {
+    public void draw(Graphics2D graphics) {
         graphics.setColor(color);
-        graphics.drawLine(start.getA(), start.getB(), end.getA(), end.getB());
+        graphics.draw(this);
     }
 
     @Override
     public void translate(int x, int y) {
-        start.translate(x, y);
-        end.translate(x, y);
-    }
-
-    @Override
-    public BoundingBox getBoundingBox() {
-        return new BoundingBox(start, end.getA() - start.getA(), end.getB() - start.getB());
+        setLine(x1 + x, y1 + y, x2 + x, y2 + y);
     }
 
     public boolean isSolid() {
         return solid;
-    }
-
-    public void setSolid(boolean solid) {
-        this.solid = solid;
     }
 
     @Override
@@ -73,8 +48,8 @@ public class Line implements GraphicObject {
     @Override
     public String toString() {
         return "Line{" +
-            "start=" + start +
-            ", end=" + end +
+            "start=" + getP1() +
+            ", end=" + getP2() +
             ", color=" + color +
             ", solid=" + solid +
             '}';

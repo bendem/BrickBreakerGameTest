@@ -1,68 +1,58 @@
 package be.bendem.gametest.core.graphics.shapes;
 
-import be.bendem.gametest.core.graphics.BoundingBox;
-import be.bendem.gametest.core.graphics.Point;
+import be.bendem.gametest.core.graphics.GraphicObject;
 
 import java.awt.Color;
-import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Point2D;
 
 /**
  * @author bendem
  */
-public class Circle extends BaseShape {
+public class Circle extends Ellipse2D.Double implements GraphicObject {
 
-    private final Point center;
-    private int radius;
+    private final boolean filled;
     private final Color color;
 
-    public Circle(Point center, int radius) {
-        this(center, radius, false);
-    }
-
-    public Circle(Point center, int radius, boolean filled) {
-        this(center, radius, filled, Color.GRAY);
-    }
-
-    public Circle(Point center, int radius, boolean filled, Color color) {
-        super(filled);
-        this.center = center;
-        this.radius = radius;
+    public Circle(Point2D center, int radius, boolean filled, Color color) {
+        super(center.getX() - radius, center.getY() - radius, radius * 2, radius * 2);
+        this.filled = filled;
         this.color = color;
     }
 
     @Override
-    public void draw(Graphics graphics) {
+    public void draw(Graphics2D graphics) {
         graphics.setColor(color);
         if(filled) {
-            graphics.fillOval(center.getA() - radius, center.getB() - radius, radius * 2, radius * 2);
+            graphics.fill(this);
         } else {
-            graphics.drawOval(center.getA() - radius, center.getB() - radius, radius * 2, radius * 2);
+            graphics.draw(this);
         }
     }
 
     @Override
     public void translate(int x, int y) {
-        center.translate(x, y);
+        setFrame(getX() + x, getY() + y, getWidth(), getHeight());
     }
 
-    public Point getCenter() {
-        return center;
-    }
-
-    public int getRadius() {
-        return radius;
-    }
-
-    public void setRadius(int radius) {
-        this.radius = radius;
-    }
-
+    /**
+     * Defines wether the object is solid or not (used in the collision checks).
+     *
+     * @return true if other object should collide with this one, false
+     * otherwise
+     */
     @Override
-    public BoundingBox getBoundingBox() {
-        Point corner = new Point(center.getA() - radius, center.getB() - radius);
-        return new BoundingBox(corner, radius * 2, radius * 2);
+    public boolean isSolid() {
+        return false;
     }
 
+    /**
+     * Defines wether the object is broken when intersecting with another one.
+     *
+     * @return true if the object breaks when colliding with another one, false
+     * otherwise
+     */
     @Override
     public boolean isBreakable() {
         return false;
