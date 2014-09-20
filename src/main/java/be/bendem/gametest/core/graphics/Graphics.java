@@ -22,6 +22,13 @@ import java.util.concurrent.TimeUnit;
  */
 public class Graphics implements Killable {
 
+    private static final Color[] COLORS = new Color[] {
+            new Color(0xFF0000), new Color(0xFF7F00),
+            new Color(0xFFFF00), new Color(0x00FF00),
+            new Color(0x0000FF), new Color(0x4B0082),
+            new Color(0x8B00FF)
+    };
+
     public final int WIDTH;
     public final int HEIGHT;
     public final int PLATEFORM_WIDTH;
@@ -81,9 +88,13 @@ public class Graphics implements Killable {
 
     public Set<Rectangle> createBricks() {
         Set<Rectangle> bricks = new HashSet<>();
-        int brickW = (WIDTH - 5) / 5;
-        for(int i = 5; i < WIDTH - 5; i += brickW) {
-            bricks.add(new Rectangle(new Point2D.Double(i, 5), brickW-5, 20, true, Color.GREEN, true));
+        int brickW = (WIDTH - 5) / 8;
+        int brickH = 18;
+        int w = 0;
+        for(int i = 10; i < HEIGHT / 2; i += brickH + 10) {
+            for(int j = 10; j < WIDTH - 10; j += brickW) {
+                bricks.add(new Rectangle(new Point2D.Double(j, i), brickW - 10, brickH, true, COLORS[(++w) % COLORS.length], true));
+            }
         }
         return bricks;
     }
