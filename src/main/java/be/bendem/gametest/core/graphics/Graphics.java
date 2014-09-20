@@ -93,7 +93,7 @@ public class Graphics implements Killable {
         int w = 0;
         for(int i = 10; i < HEIGHT / 2; i += brickH + 10) {
             for(int j = 10; j < WIDTH - 10; j += brickW) {
-                bricks.add(new Rectangle(new Point2D.Double(j, i), brickW - 10, brickH, true, COLORS[(++w) % COLORS.length], true));
+                bricks.add(new Rectangle(new Point2D.Double(j, i), brickW - 10, brickH, true, COLORS[++w % COLORS.length], true));
             }
         }
         return bricks;
