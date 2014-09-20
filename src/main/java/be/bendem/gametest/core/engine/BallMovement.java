@@ -70,6 +70,7 @@ public class BallMovement implements Killable {
 
     private Direction handleCollision(GraphicObject object) {
         Rectangle objectBox = object.getBounds();
+        // FIXME when hitting a wall (i.e. on the right), the corners of the hitbox touch the wall too so it detects the top and the bottom as well
         if(direction.getX() > 0 // Going right
                 && ball.getMaxX() >= objectBox.getMinX()) {
             return Direction.Right;
