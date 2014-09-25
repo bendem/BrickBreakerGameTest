@@ -12,9 +12,9 @@ import be.bendem.gametest.utils.IntersectionUtils;
 import be.bendem.gametest.utils.RepeatingTask;
 
 import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
 import java.util.Collection;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * @author bendem
@@ -35,22 +35,21 @@ public class BallMovement implements Killable {
 
     public void moveBall() {
         // TODO optimize that (i.e. /don't filter everything before finding one/ or /merge filters/ if streams doesn't already do that)
-        Rectangle2D ballBoundingBox = ball.getBounds2D();
+        // TODO IntersectionUtils.intersectPoints's actually called twice if an object is found
         Optional<GraphicObject> optionalObject = graphics.getObjects().stream()
                 .filter(GraphicObject::isSolid)
                 .filter(obj -> obj != ball)
-                .filter(object -> object.intersects(ballBoundingBox))
+                .filter(obj -> IntersectionUtils.intersectPoints(obj, ball).size() > 0)
                 .findAny();
 
         if(optionalObject.isPresent()) {
             GraphicObject object = optionalObject.get();
-            Direction collisionDirection = handleCollision(object);
-            Logger.debug("Collided with " + object.getBounds2D() + " in " + collisionDirection + " direction");
+            Collection<Point2D> intersectionPoints = IntersectionUtils.intersectPoints(object, ball);
+            Direction collisionDirection = handleCollision(intersectionPoints);
+
             if(collisionDirection == null) {
-                // FIXME That should never happen, if it does (and it does), it's definitly a bug :|
-                Logger.error("Collision is null", new AssertionError("That's some fucked up collision :("));
-                ball.translate(direction.getX(), direction.getY());
-                return;
+                Logger.debug("Collided with " + object.getBounds2D());
+                throw new AssertionError("That's some fucked up collision :(");
             }
 
             // Reverse the corresponding direction
@@ -73,13 +72,11 @@ public class BallMovement implements Killable {
         ball.translate(direction.getX(), direction.getY());
     }
 
-    private Direction handleCollision(GraphicObject object) {
-        Collection<Point2D> intersectionPoints = IntersectionUtils.intersect(object, ball);
-
-        if(intersectionPoints.size() < 1 || intersectionPoints.size() > 2) {
+    private Direction handleCollision(Collection<Point2D> intersectionPoints) {
+        if(intersectionPoints.size() > 1) {
             // FIXME Handle possible multiple intersections by pushing the ball out of the object
             Logger.error("You broke it, the ball didn't intersect with one point but " + intersectionPoints.size() + " :(");
-            return null;
+            Logger.debug("Collided in [" + intersectionPoints.stream().map(Point2D::toString).collect(Collectors.joining(", ")) + "]");
         }
 
         Direction direction = null;
@@ -103,7 +100,6 @@ public class BallMovement implements Killable {
     }
 
     private Direction getDirectionFromAngle(double angle) {
-        Logger.debug("Collision angle: " + angle);
         if(angle <= 45 || angle > 315) {
             return Direction.Right;
         }
@@ -113,8 +109,8 @@ public class BallMovement implements Killable {
         if(angle < 225) {
             return Direction.Left;
         }
-            return Direction.Down;
-        }
+        return Direction.Down;
+    }
 
     public void start() {
         task.start();
