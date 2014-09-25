@@ -1,7 +1,6 @@
 package be.bendem.gametest.utils;
 
 import be.bendem.gametest.core.graphics.GraphicObject;
-import be.bendem.gametest.core.graphics.shapes.Line;
 
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
@@ -18,20 +17,20 @@ import java.util.Set;
  */
 public class IntersectionUtils {
 
-    public static Collection<Point2D> intersect(GraphicObject object, Ellipse2D circle) {
+    public static Collection<Point2D> intersectPoints(GraphicObject object, Ellipse2D circle) {
         if(object instanceof Line2D) {
-            return intersect((Line2D) object, circle);
+            return intersectPoints((Line2D) object, circle);
         }
-        return intersect(object.getBounds2D(), circle);
+        return intersectPoints(object.getBounds2D(), circle);
     }
 
-    public static Collection<Point2D> intersect(Rectangle2D rectangle, Ellipse2D circle) {
+    public static Collection<Point2D> intersectPoints(Rectangle2D rectangle, Ellipse2D circle) {
         Set<Point2D> points = new HashSet<>();
-        getRectangleLines(rectangle).forEach(line -> points.addAll(intersect(line, circle)));
+        getRectangleLines(rectangle).forEach(line -> points.addAll(intersectPoints(line, circle)));
         return points;
     }
 
-    private static Collection<Point2D> intersect(Line2D line, Ellipse2D circle) {
+    private static Collection<Point2D> intersectPoints(Line2D line, Ellipse2D circle) {
         double baX = line.getP2().getX() - line.getP1().getX();
         double baY = line.getP2().getY() - line.getP1().getY();
         double caX = circle.getCenterX() - line.getP1().getX();
