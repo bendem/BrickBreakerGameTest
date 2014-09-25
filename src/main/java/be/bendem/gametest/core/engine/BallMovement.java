@@ -55,12 +55,16 @@ public class BallMovement implements Killable {
             // Reverse the corresponding direction
             switch(collisionDirection) {
                 case Left:
+                    direction.setX(Math.abs(direction.getX()));
+                    break;
                 case Right:
-                    direction.setX(-direction.getX());
+                    direction.setX(-Math.abs(direction.getX()));
                     break;
                 case Up:
+                    direction.setY(Math.abs(direction.getY()));
+                    break;
                 case Down:
-                    direction.setY(-direction.getY());
+                    direction.setY(-Math.abs(direction.getY()));
                     break;
                 default:
                     throw new AssertionError("Unhandled Direction value");
