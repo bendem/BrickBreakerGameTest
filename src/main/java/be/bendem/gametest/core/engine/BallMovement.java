@@ -8,10 +8,12 @@ import be.bendem.gametest.core.graphics.Graphics;
 import be.bendem.gametest.core.graphics.Vector2D;
 import be.bendem.gametest.core.graphics.shapes.Circle;
 import be.bendem.gametest.core.logging.Logger;
+import be.bendem.gametest.utils.IntersectionUtils;
 import be.bendem.gametest.utils.RepeatingTask;
 
-import java.awt.Rectangle;
+import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.util.Collection;
 import java.util.Optional;
 
 /**
@@ -27,7 +29,7 @@ public class BallMovement implements Killable {
     public BallMovement(GameTest game, Circle ball) {
         this.ball = ball;
         this.task = new RepeatingTask(this::moveBall, "ball-mover", game.getConfig().getInt("engine.ball.update.delay", 7));
-        this.direction = new Vector2D(1, -2);
+        this.direction = new Vector2D(-1, -1);
         this.graphics = game.getGraphics();
     }
 
@@ -43,9 +45,12 @@ public class BallMovement implements Killable {
         if(optionalObject.isPresent()) {
             GraphicObject object = optionalObject.get();
             Direction collisionDirection = handleCollision(object);
-            Logger.debug("Collided with " + object);
+            Logger.debug("Collided with " + object.getBounds2D() + " in " + collisionDirection + " direction");
             if(collisionDirection == null) {
-                throw new AssertionError("The object we collided with does not intersect with the ball :(");
+                // FIXME That should never happen, if it does (and it does), it's definitly a bug :|
+                Logger.error("Collision is null", new AssertionError("That's some fucked up collision :("));
+                ball.translate(direction.getX(), direction.getY());
+                return;
             }
 
             // Reverse the corresponding direction
@@ -69,25 +74,46 @@ public class BallMovement implements Killable {
     }
 
     private Direction handleCollision(GraphicObject object) {
-        Rectangle objectBox = object.getBounds();
-        // FIXME when hitting a wall (i.e. on the right), the corners of the hitbox touch the wall too so it detects the top and the bottom as well
-        if(direction.getX() > 0 // Going right
-                && ball.getMaxX() >= objectBox.getMinX()) {
-            return Direction.Right;
+        Collection<Point2D> intersectionPoints = IntersectionUtils.intersect(object, ball);
+
+        if(intersectionPoints.size() < 1 || intersectionPoints.size() > 2) {
+            // FIXME Handle possible multiple intersections by pushing the ball out of the object
+            Logger.error("You broke it, the ball didn't intersect with one point but " + intersectionPoints.size() + " :(");
+            return null;
         }
-        if(direction.getX() < 0 // Going left
-                && ball.getMinX() <= objectBox.getMaxX()) {
-            return Direction.Left;
+
+        Direction direction = null;
+        for(Point2D point : intersectionPoints) {
+            Direction tmp = getDirectionFromPoint(point);
+            if(direction != null && direction != tmp) {
+                Logger.error("Collided in more than one direction : " + direction + " / " + tmp);
+                return null;
+            }
+            direction = getDirectionFromPoint(point);
         }
-        if(direction.getY() > 0 // Going down
-                && ball.getMaxY() >= objectBox.getMinY()) {
-            return Direction.Down;
-        }
-        if(direction.getY() < 0 // Going up
-                && ball.getMinY() <= objectBox.getMaxY()) {
+        return direction;
+    }
+
+    private Direction getDirectionFromPoint(Point2D point) {
+        return getDirectionFromAngle(getAngleFromPoint(point));
+    }
+
+    private double getAngleFromPoint(Point2D point) {
+        return (Math.toDegrees(Math.atan2(point.getY() - ball.getCenterY(), point.getX() - ball.getCenterX())) + 360) % 360;
+    }
+
+    private Direction getDirectionFromAngle(double angle) {
+        Logger.debug("Collision angle: " + angle);
+        if(angle > 45 && angle < 135) {
             return Direction.Up;
         }
-        return null;
+        if(angle > 135 && angle < 225) {
+            return Direction.Left;
+        }
+        if(angle > 225 && angle < 315) {
+            return Direction.Down;
+        }
+        return Direction.Right;
     }
 
     public void start() {
