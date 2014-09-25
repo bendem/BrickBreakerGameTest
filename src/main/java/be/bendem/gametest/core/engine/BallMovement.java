@@ -99,22 +99,22 @@ public class BallMovement implements Killable {
     }
 
     private double getAngleFromPoint(Point2D point) {
-        return (Math.toDegrees(Math.atan2(point.getY() - ball.getCenterY(), point.getX() - ball.getCenterX())) + 360) % 360;
+        return (Math.toDegrees(Math.atan2(ball.getCenterY() - point.getY(), point.getX() - ball.getCenterX())) + 360) % 360;
     }
 
     private Direction getDirectionFromAngle(double angle) {
         Logger.debug("Collision angle: " + angle);
-        if(angle > 45 && angle < 135) {
+        if(angle <= 45 || angle > 315) {
+            return Direction.Right;
+        }
+        if(angle < 135) {
             return Direction.Up;
         }
-        if(angle > 135 && angle < 225) {
+        if(angle < 225) {
             return Direction.Left;
         }
-        if(angle > 225 && angle < 315) {
             return Direction.Down;
         }
-        return Direction.Right;
-    }
 
     public void start() {
         task.start();
