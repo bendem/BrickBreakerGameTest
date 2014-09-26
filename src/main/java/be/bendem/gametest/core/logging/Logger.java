@@ -45,7 +45,7 @@ public class Logger {
 
     private static void log(String string, Throwable throwable, LogLevel level) {
         PrintStream out = level.isError() ? System.err : System.out;
-        out.println("[" + level.getName() + "] [" + getTime() + "] " + string);
+        out.println("[" + level.getName() + "] [" + getTime() + " | " + Thread.currentThread().getName() + "] " + string);
         if(throwable != null) {
             throwable.printStackTrace(out);
         }
