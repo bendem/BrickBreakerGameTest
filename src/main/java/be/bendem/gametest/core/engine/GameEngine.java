@@ -34,12 +34,17 @@ public class GameEngine implements Killable {
         PLATEFORM_DISTANCE = game.getConfig().getInt("engine.plateform.distance", 15);
 
         this.game = game;
+
         Graphics graphics = game.getGraphics();
         this.plateform = graphics.createPlateform();
+        Circle ball = graphics.createBall();
         Collection<Circle> lifePoints = graphics.createLifePoints();
-        this.ballMovement = new BallMovement(game, graphics.createBall(), lifePoints);
-        graphics.getObjects().addAll(graphics.createBricks());
+
+        this.ballMovement = new BallMovement(game, ball, lifePoints);
+
+        graphics.getObjects().add(ball);
         graphics.getObjects().addAll(lifePoints);
+        graphics.getObjects().addAll(graphics.createBricks());
     }
 
     public void start() {

@@ -84,9 +84,7 @@ public class Graphics implements Killable {
     }
 
     public Circle createBall() {
-        Circle circle = new Circle(new Point2D.Double(WIDTH / 2, HEIGHT / 2), 7, true, Color.LIGHT_GRAY);
-        objects.add(circle);
-        return circle;
+        return new Circle(new Point2D.Double(WIDTH / 2, HEIGHT / 2), 7, true, Color.LIGHT_GRAY);
     }
 
     public Set<Rectangle> createBricks() {
