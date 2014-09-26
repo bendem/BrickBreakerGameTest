@@ -112,7 +112,7 @@ public class Graphics implements Killable {
     }
 
     public GraphicObject createLevelText() {
-        return new Text("1", new Point2D.Double(0, HEIGHT), 42, true, Color.LIGHT_GRAY);
+        return new Text("1", new Point2D.Double(10, HEIGHT - 10), 42, true, Color.LIGHT_GRAY);
     }
 
     public Collection<GraphicObject> getObjects() {
