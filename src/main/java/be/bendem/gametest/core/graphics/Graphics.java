@@ -10,12 +10,15 @@ import be.bendem.gametest.utils.RepeatingTask;
 
 import java.awt.Color;
 import java.awt.geom.Point2D;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 /**
  * @author bendem
@@ -99,7 +102,19 @@ public class Graphics implements Killable {
         return bricks;
     }
 
+    public Collection<Circle> createLifePoints() {
+        List<Circle> circles = new ArrayList<>(3);
+        int lifeRadius = 7;
+        for(int i = 0; i < 3; i++) {
+            // TODO That point calculation is horrible
+            circles.add(new Circle(new Point2D.Double(WIDTH - 10 - lifeRadius - ((lifeRadius + lifeRadius*2) * i), HEIGHT - lifeRadius*2 - 5), lifeRadius, true, Color.LIGHT_GRAY));
+        }
+        Collections.reverse(circles);
+        return circles;
+    }
+
     public Collection<GraphicObject> getObjects() {
         return objects;
     }
+
 }

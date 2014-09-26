@@ -36,6 +36,10 @@ public class Circle extends Ellipse2D.Double implements GraphicObject {
         setFrame(getX() + x, getY() + y, getWidth(), getHeight());
     }
 
+    public void setCenter(Point2D point) {
+        setFrame(point.getX() - getHeight()/2, point.getY() - getHeight(), getWidth(), getHeight());
+    }
+
     /**
      * Defines wether the object is solid or not (used in the collision checks).
      *

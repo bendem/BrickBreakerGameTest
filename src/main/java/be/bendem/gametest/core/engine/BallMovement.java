@@ -13,6 +13,7 @@ import be.bendem.gametest.utils.RepeatingTask;
 
 import java.awt.geom.Point2D;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -25,12 +26,14 @@ public class BallMovement implements Killable {
     private final RepeatingTask task;
     private final Vector2D direction;
     private final Graphics graphics;
+    private final Collection<Circle> lifePoints;
 
-    public BallMovement(GameTest game, Circle ball) {
+    public BallMovement(GameTest game, Circle ball, Collection<Circle> lifePoints) {
         this.ball = ball;
         this.task = new RepeatingTask(this::moveBall, "ball-mover", game.getConfig().getInt("engine.ball.update.delay", 7));
         this.direction = new Vector2D(-1, -1);
         this.graphics = game.getGraphics();
+        this.lifePoints = lifePoints;
     }
 
     public void moveBall() {
@@ -74,6 +77,19 @@ public class BallMovement implements Killable {
             }
         }
         ball.translate(direction.getX(), direction.getY());
+
+        // Handle loosing the game
+        if(ball.getCenterY() + ball.getHeight()/2 > graphics.HEIGHT) {
+            if(lifePoints.size() == 0) {
+                Logger.info("You loose");
+                kill();
+                return;
+            }
+            Iterator<Circle> iterator = lifePoints.iterator();
+            graphics.getObjects().remove(iterator.next());
+            iterator.remove();
+            ball.setCenter(new Point2D.Double(graphics.WIDTH/2, graphics.HEIGHT/2));
+        }
     }
 
     private Direction handleCollision(Collection<Point2D> intersectionPoints) {

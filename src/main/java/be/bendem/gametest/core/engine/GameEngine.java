@@ -10,9 +10,12 @@ import be.bendem.gametest.core.events.awt.events.KeyReleasedEvent;
 import be.bendem.gametest.core.events.awt.events.MousePressedEvent;
 import be.bendem.gametest.core.events.awt.events.WindowClosingEvent;
 import be.bendem.gametest.core.graphics.Graphics;
+import be.bendem.gametest.core.graphics.shapes.Circle;
 import be.bendem.gametest.core.graphics.shapes.Rectangle;
 
 import java.awt.event.KeyEvent;
+import java.util.Collection;
+import java.util.Set;
 
 /**
  * TODO Check collisions
@@ -33,8 +36,10 @@ public class GameEngine implements Killable {
         this.game = game;
         Graphics graphics = game.getGraphics();
         this.plateform = graphics.createPlateform();
-        this.ballMovement = new BallMovement(game, graphics.createBall());
+        Collection<Circle> lifePoints = graphics.createLifePoints();
+        this.ballMovement = new BallMovement(game, graphics.createBall(), lifePoints);
         graphics.getObjects().addAll(graphics.createBricks());
+        graphics.getObjects().addAll(lifePoints);
     }
 
     public void start() {

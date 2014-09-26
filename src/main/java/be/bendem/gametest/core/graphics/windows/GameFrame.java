@@ -22,6 +22,9 @@ public class GameFrame extends BaseFrame implements Killable {
         objects.add(new Line(new Point(0, 0), new Point(0, height), true));
         objects.add(new Line(new Point(0, 0), new Point(width, 0), true));
         objects.add(new Line(new Point(width-1, 0), new Point(width-1, height), true)); // width-1 because why not
+
+        // TODO Remove that if you want to play
+        //objects.add(new Line(new Point(0, height-1), new Point(width, height-1), true)); // height-1 because why not
     }
 
     @Override
