@@ -15,11 +15,8 @@ import be.bendem.gametest.core.graphics.shapes.Rectangle;
 
 import java.awt.event.KeyEvent;
 import java.util.Collection;
-import java.util.Set;
 
 /**
- * TODO Check collisions
- *
  * @author bendem
  */
 public class GameEngine implements Killable {
