@@ -7,6 +7,8 @@ import be.bendem.gametest.core.graphics.GraphicObject;
 import be.bendem.gametest.core.graphics.Graphics;
 import be.bendem.gametest.core.graphics.Vector2D;
 import be.bendem.gametest.core.graphics.shapes.Circle;
+import be.bendem.gametest.core.graphics.shapes.Rectangle;
+import be.bendem.gametest.core.graphics.shapes.Text;
 import be.bendem.gametest.core.logging.Logger;
 import be.bendem.gametest.utils.IntersectionUtils;
 import be.bendem.gametest.utils.RepeatingTask;
@@ -23,13 +25,17 @@ import java.util.stream.Collectors;
 public class BallMovement implements Killable {
 
     private final Circle ball;
+    private final Collection<Rectangle> bricks;
+    private final Text levelText;
     private final RepeatingTask task;
     private final Vector2D direction;
     private final Graphics graphics;
     private final Collection<Circle> lifePoints;
 
-    public BallMovement(GameTest game, Circle ball, Collection<Circle> lifePoints) {
+    public BallMovement(GameTest game, Circle ball, Collection<Rectangle> bricks, Text levelText, Collection<Circle> lifePoints) {
         this.ball = ball;
+        this.bricks = bricks;
+        this.levelText = levelText;
         this.task = new RepeatingTask(this::moveBall, "ball-mover", game.getConfig().getInt("engine.ball.update.delay", 7));
         this.direction = new Vector2D(-1, -1);
         this.graphics = game.getGraphics();
@@ -74,6 +80,16 @@ public class BallMovement implements Killable {
             }
             if(object.isBreakable()) {
                 graphics.getObjects().remove(object);
+                bricks.remove(object);
+                if(bricks.size() == 0) {
+                    // You win the level
+                    Logger.info("You won a level!");
+                    levelText.setText(Integer.toString(Integer.parseInt(levelText.getText()) + 1));
+                    Collection<Rectangle> newBricks = graphics.createBricks();
+                    bricks.addAll(newBricks);
+                    graphics.getObjects().addAll(newBricks);
+                    resetBallPosition();
+                }
             }
         }
         ball.translate(direction.getX(), direction.getY());
@@ -88,8 +104,12 @@ public class BallMovement implements Killable {
             Iterator<Circle> iterator = lifePoints.iterator();
             graphics.getObjects().remove(iterator.next());
             iterator.remove();
-            ball.setCenter(new Point2D.Double(graphics.WIDTH/2, graphics.HEIGHT/2));
+            resetBallPosition();
         }
+    }
+
+    private void resetBallPosition() {
+        ball.setCenter(new Point2D.Double(graphics.WIDTH/2, graphics.HEIGHT/2));
     }
 
     private Direction handleCollision(Collection<Point2D> intersectionPoints) {

@@ -12,6 +12,7 @@ import be.bendem.gametest.core.events.awt.events.WindowClosingEvent;
 import be.bendem.gametest.core.graphics.Graphics;
 import be.bendem.gametest.core.graphics.shapes.Circle;
 import be.bendem.gametest.core.graphics.shapes.Rectangle;
+import be.bendem.gametest.core.graphics.shapes.Text;
 
 import java.awt.event.KeyEvent;
 import java.util.Collection;
@@ -36,13 +37,15 @@ public class GameEngine implements Killable {
         this.plateform = graphics.createPlateform();
         Circle ball = graphics.createBall();
         Collection<Circle> lifePoints = graphics.createLifePoints();
+        Collection<Rectangle> bricks = graphics.createBricks();
+        Text levelText = graphics.createLevelText();
 
-        this.ballMovement = new BallMovement(game, ball, lifePoints);
+        this.ballMovement = new BallMovement(game, ball, bricks, levelText, lifePoints);
 
         graphics.getObjects().add(ball);
         graphics.getObjects().addAll(lifePoints);
-        graphics.getObjects().addAll(graphics.createBricks());
-        graphics.getObjects().add(graphics.createLevelText());
+        graphics.getObjects().addAll(bricks);
+        graphics.getObjects().add(levelText);
     }
 
     public void start() {

@@ -87,7 +87,7 @@ public class Graphics implements Killable {
         return new Circle(new Point2D.Double(WIDTH / 2, HEIGHT / 2), 7, true, Color.LIGHT_GRAY);
     }
 
-    public Set<Rectangle> createBricks() {
+    public Collection<Rectangle> createBricks() {
         Set<Rectangle> bricks = new HashSet<>();
         int brickW = (WIDTH - 5) / 8;
         int brickH = 18;
@@ -111,8 +111,8 @@ public class Graphics implements Killable {
         return circles;
     }
 
-    public GraphicObject createLevelText() {
-        return new Text("1", new Point2D.Double(10, HEIGHT - 10), 42, true, Color.LIGHT_GRAY);
+    public Text createLevelText() {
+        return new Text("1", new Point2D.Double(10, HEIGHT - 10), 35, true, Color.LIGHT_GRAY);
     }
 
     public Collection<GraphicObject> getObjects() {

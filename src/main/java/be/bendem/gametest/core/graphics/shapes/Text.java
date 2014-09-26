@@ -16,7 +16,7 @@ import java.awt.geom.Rectangle2D;
  */
 public class Text implements GraphicObject {
 
-    private final String text;
+    private String text;
     private final Point2D point;
     private final int size;
     private final boolean bold;
@@ -28,6 +28,14 @@ public class Text implements GraphicObject {
         this.size = size;
         this.bold = bold;
         this.color = color;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
     }
 
     @Override
