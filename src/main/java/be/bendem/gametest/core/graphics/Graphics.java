@@ -4,6 +4,7 @@ import be.bendem.gametest.GameTest;
 import be.bendem.gametest.core.Killable;
 import be.bendem.gametest.core.graphics.shapes.Circle;
 import be.bendem.gametest.core.graphics.shapes.Rectangle;
+import be.bendem.gametest.core.graphics.shapes.Text;
 import be.bendem.gametest.core.graphics.windows.GameFrame;
 import be.bendem.gametest.core.logging.Logger;
 import be.bendem.gametest.utils.RepeatingTask;
@@ -109,6 +110,10 @@ public class Graphics implements Killable {
         }
         Collections.reverse(circles);
         return circles;
+    }
+
+    public GraphicObject createLevelText() {
+        return new Text("1", new Point2D.Double(0, HEIGHT), 42, true, Color.LIGHT_GRAY);
     }
 
     public Collection<GraphicObject> getObjects() {

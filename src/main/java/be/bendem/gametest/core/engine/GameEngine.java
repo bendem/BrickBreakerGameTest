@@ -45,6 +45,7 @@ public class GameEngine implements Killable {
         graphics.getObjects().add(ball);
         graphics.getObjects().addAll(lifePoints);
         graphics.getObjects().addAll(graphics.createBricks());
+        graphics.getObjects().add(graphics.createLevelText());
     }
 
     public void start() {
