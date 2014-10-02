@@ -81,10 +81,10 @@ public class IntersectionUtils {
 
     public static Collection<Line2D> getRectangleLines(Rectangle2D rectangle) {
         HashSet<Line2D> lines = new HashSet<>();
-        Point2D.Double topLeft = new Point2D.Double(rectangle.getMinX(), rectangle.getMinY());
-        Point2D.Double topRight = new Point2D.Double(rectangle.getMaxX(), rectangle.getMinY());
-        Point2D.Double bottomLeft = new Point2D.Double(rectangle.getMinX(), rectangle.getMaxY());
-        Point2D.Double bottomRight = new Point2D.Double(rectangle.getMaxX(), rectangle.getMaxY());
+        Point2D topLeft = new Point2D.Double(rectangle.getMinX(), rectangle.getMinY());
+        Point2D topRight = new Point2D.Double(rectangle.getMaxX(), rectangle.getMinY());
+        Point2D bottomLeft = new Point2D.Double(rectangle.getMinX(), rectangle.getMaxY());
+        Point2D bottomRight = new Point2D.Double(rectangle.getMaxX(), rectangle.getMaxY());
 
         lines.add(new Line2D.Double(topLeft, topRight));
         lines.add(new Line2D.Double(topLeft, bottomLeft));
