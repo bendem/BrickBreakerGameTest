@@ -1,4 +1,4 @@
-# PongGameTest
+# BrickBreakerGameTest
 
 This is a test to write a little game by myself, while discovering some new java 8 features and how to not use awt.
 
