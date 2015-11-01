@@ -16,7 +16,7 @@ import java.awt.Point;
 public class GameFrame extends BaseFrame implements Killable {
 
     public GameFrame(EventManager<InternalEvent> manager, Graphics graphics, int width, int height) {
-        super("Game Test", manager, graphics, new Dimension(width, height), Color.BLACK);
+        super("Game Test", manager, graphics, new Dimension(width, height), new Color(20, 20, 20));
 
         // Border of the screen
         objects.add(new Line(new Point(0, 0), new Point(0, height), true));
