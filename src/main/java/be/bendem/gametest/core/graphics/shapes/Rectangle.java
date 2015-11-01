@@ -46,9 +46,9 @@ public class Rectangle extends Rectangle2D.Double implements GraphicObject {
     public void draw(Graphics2D graphics) {
         graphics.setColor(color);
         if(filled) {
-            graphics.fill(this);
+            graphics.fillRect((int) getMinX(), (int) getMinY(), (int) getWidth(), (int) getHeight());
         } else {
-            graphics.draw(this);
+            graphics.drawRect((int) getMinX(), (int) getMinY(), (int) getWidth(), (int) getHeight());
         }
     }
 

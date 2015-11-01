@@ -28,7 +28,7 @@ public class Line extends Line2D.Double implements GraphicObject {
     @Override
     public void draw(Graphics2D graphics) {
         graphics.setColor(color);
-        graphics.draw(this);
+        graphics.drawLine((int) getX1(), (int) getY1(), (int) getX2(), (int) getY2());
     }
 
     @Override

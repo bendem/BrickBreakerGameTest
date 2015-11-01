@@ -25,9 +25,9 @@ public class Circle extends Ellipse2D.Double implements GraphicObject {
     public void draw(Graphics2D graphics) {
         graphics.setColor(color);
         if(filled) {
-            graphics.fill(this);
+            graphics.fillOval((int) getMinX(), (int) getMinY(), (int) getWidth(), (int) getHeight());
         } else {
-            graphics.draw(this);
+            graphics.drawOval((int) getMinX(), (int) getMinY(), (int) getWidth(), (int) getHeight());
         }
     }
 

@@ -35,6 +35,7 @@ public abstract class BaseFrame extends Frame {
 
     protected final Collection<GraphicObject> objects;
     protected final Panel panel;
+    protected Graphics2D graphics;
 
     public BaseFrame(String title, EventManager<InternalEvent> manager, Graphics graphics, Dimension dimensions, Color color) {
         super(title);
@@ -58,19 +59,21 @@ public abstract class BaseFrame extends Frame {
     }
 
     public void redraw() {
-        Graphics2D graphics = ((Graphics2D) panel.getGraphics());
         if(graphics == null) {
-            // UI isn't loaded
-            return;
+            graphics = (Graphics2D) panel.getGraphics();
+            if(graphics == null) {
+                // UI isn't loaded
+                return;
+            }
+            graphics.setRenderingHints(RENDERER_OPTIONS);
         }
-        graphics.setRenderingHints(RENDERER_OPTIONS);
 
-        drawBackgroung(graphics.create());
+        drawBackground(graphics);
 
-        objects.forEach(object -> object.draw((Graphics2D) graphics.create()));
+        objects.forEach(object -> object.draw(graphics));
     }
 
-    private void drawBackgroung(java.awt.Graphics graphics) {
+    private void drawBackground(java.awt.Graphics graphics) {
         graphics.setColor(panel.getBackground());
         graphics.fillRect(0, 0, getWidth(), getHeight());
     }

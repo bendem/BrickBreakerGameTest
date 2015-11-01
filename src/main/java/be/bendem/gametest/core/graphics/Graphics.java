@@ -9,15 +9,15 @@ import be.bendem.gametest.core.graphics.windows.GameFrame;
 import be.bendem.gametest.core.logging.Logger;
 import be.bendem.gametest.utils.RepeatingTask;
 
-import java.awt.Color;
+import java.awt.*;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -34,8 +34,8 @@ public class Graphics implements Killable {
 
     public final int WIDTH;
     public final int HEIGHT;
-    public final int PLATEFORM_WIDTH;
-    public final int PLATEFORM_HEIGHT;
+    public final int PLATFORM_WIDTH;
+    public final int PLATFORM_HEIGHT;
 
     private final Collection<GraphicObject> objects;
     private final GameFrame frame;
@@ -44,9 +44,9 @@ public class Graphics implements Killable {
     public Graphics(GameTest game) {
         this.WIDTH = game.getConfig().getInt("graphics.width", 800);
         this.HEIGHT = game.getConfig().getInt("graphics.height", 500);
-        this.PLATEFORM_WIDTH = game.getConfig().getInt("graphics.plateform.width", 80);
-        this.PLATEFORM_HEIGHT = game.getConfig().getInt("graphics.plateform.height", 10);
-        this.objects = Collections.synchronizedSet(new LinkedHashSet<>());
+        this.PLATFORM_WIDTH = game.getConfig().getInt("graphics.platform.width", 80);
+        this.PLATFORM_HEIGHT = game.getConfig().getInt("graphics.platform.height", 10);
+        this.objects = new CopyOnWriteArraySet<>();
         this.frame = new GameFrame(game.getEventManager(), this, WIDTH, HEIGHT);
 
         long updateInterval = TimeUnit.SECONDS.toMillis(1) / game.getConfig().getInt("graphics.fps", 40);
@@ -68,19 +68,19 @@ public class Graphics implements Killable {
         frame.kill();
     }
 
-    public Rectangle createPlateform() {
-        Rectangle plateform = new Rectangle(
+    public Rectangle createPlatform() {
+        Rectangle platform = new Rectangle(
             new Point2D.Double(
-                WIDTH / 2 - PLATEFORM_WIDTH / 2,
-                HEIGHT - PLATEFORM_HEIGHT - 5
+                WIDTH / 2 - PLATFORM_WIDTH / 2,
+                HEIGHT - PLATFORM_HEIGHT - 5
             ),
-            PLATEFORM_WIDTH,
-            PLATEFORM_HEIGHT,
+            PLATFORM_WIDTH,
+            PLATFORM_HEIGHT,
             true,
             Color.WHITE
         );
-        objects.add(plateform);
-        return plateform;
+        objects.add(platform);
+        return platform;
     }
 
     public Circle createBall() {

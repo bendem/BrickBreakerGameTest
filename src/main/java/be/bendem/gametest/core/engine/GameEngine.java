@@ -22,19 +22,19 @@ import java.util.Collection;
  */
 public class GameEngine implements Killable {
 
-    private final int PLATEFORM_DISTANCE;
+    private final int PLATFORM_DISTANCE;
 
     private final GameTest game;
-    private final Rectangle plateform;
+    private final Rectangle platform;
     private final BallMovement ballMovement;
 
     public GameEngine(GameTest game) {
-        PLATEFORM_DISTANCE = game.getConfig().getInt("engine.plateform.distance", 15);
+        PLATFORM_DISTANCE = game.getConfig().getInt("engine.platform.distance", 15);
 
         this.game = game;
 
         Graphics graphics = game.getGraphics();
-        this.plateform = graphics.createPlateform();
+        this.platform = graphics.createPlatform();
         Circle ball = graphics.createBall();
         Collection<Circle> lifePoints = graphics.createLifePoints();
         Collection<Rectangle> bricks = graphics.createBricks();
@@ -54,29 +54,29 @@ public class GameEngine implements Killable {
         register(e -> game.kill(), WindowClosingEvent.class);
 
         // Game controls
-        register(e -> moveLeft(PLATEFORM_DISTANCE * 2), MousePressedEvent.class).filter(event -> event.isButtonDown(1));
-        register(e -> moveLeft(PLATEFORM_DISTANCE), KeyPressedEvent.class).filter(e -> e.isButton(KeyEvent.VK_LEFT));
-        register(e -> moveRight(PLATEFORM_DISTANCE * 2), MousePressedEvent.class).filter(event -> event.isButtonDown(3));
-        register(e -> moveRight(PLATEFORM_DISTANCE), KeyPressedEvent.class).filter(e -> e.isButton(KeyEvent.VK_RIGHT));
+        register(e -> moveLeft(PLATFORM_DISTANCE * 2), MousePressedEvent.class).filter(event -> event.isButtonDown(1));
+        register(e -> moveLeft(PLATFORM_DISTANCE), KeyPressedEvent.class).filter(e -> e.isButton(KeyEvent.VK_LEFT));
+        register(e -> moveRight(PLATFORM_DISTANCE * 2), MousePressedEvent.class).filter(event -> event.isButtonDown(3));
+        register(e -> moveRight(PLATFORM_DISTANCE), KeyPressedEvent.class).filter(e -> e.isButton(KeyEvent.VK_RIGHT));
 
         ballMovement.start();
     }
 
     private void moveLeft(int distance) {
-        // FIXME If the plateform is moved into the ball, the ball can't free itself
-        if(plateform.getMinX() - distance < 5) {
-            plateform.translate((int) (5 - plateform.getMinX()), 0);
+        // FIXME If the platform is moved into the ball, the ball can't free itself
+        if(platform.getMinX() - distance < 5) {
+            platform.translate((int) (5 - platform.getMinX()), 0);
         } else {
-            plateform.translate(-distance, 0);
+            platform.translate(-distance, 0);
         }
     }
 
     private void moveRight(int distance) {
-        // FIXME If the plateform is moved into the ball, the ball can't free itself
-        if(plateform.getMaxX() + distance > game.getGraphics().WIDTH - 5) {
-            plateform.translate((int) (game.getGraphics().WIDTH - 5 - plateform.getMaxX()), 0);
+        // FIXME If the platform is moved into the ball, the ball can't free itself
+        if(platform.getMaxX() + distance > game.getGraphics().WIDTH - 5) {
+            platform.translate((int) (game.getGraphics().WIDTH - 5 - platform.getMaxX()), 0);
         } else {
-            plateform.translate(distance, 0);
+            platform.translate(distance, 0);
         }
     }
 

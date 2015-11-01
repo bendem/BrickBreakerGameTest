@@ -43,12 +43,11 @@ public class BallMovement implements Killable {
     }
 
     public void moveBall() {
-        // TODO optimize that (i.e. /don't filter everything before finding one/ or /merge filters/ if streams doesn't already do that)
         // TODO IntersectionUtils.intersectPoints's actually called twice if an object is found
         Optional<GraphicObject> optionalObject = graphics.getObjects().stream()
                 .filter(GraphicObject::isSolid)
                 .filter(obj -> obj != ball)
-                .filter(obj -> IntersectionUtils.intersectPoints(obj, ball).size() > 0)
+                .filter(obj -> !IntersectionUtils.intersectPoints(obj, ball).isEmpty())
                 .findAny();
 
         if(optionalObject.isPresent()) {

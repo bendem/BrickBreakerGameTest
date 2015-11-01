@@ -4,14 +4,15 @@ import be.bendem.gametest.core.logging.Logger;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author bendem
@@ -27,26 +28,35 @@ public class Config {
     }
 
     public void load() {
-        final List<String> configLines;
+        Stream<String> lines;
         try {
-            configLines = Files.readAllLines(configFile, Charset.forName("utf-8"));
+            lines = Files.lines(configFile, StandardCharsets.UTF_8);
         } catch(IOException e) {
             Logger.error("Could not load config", e);
             return;
         }
 
+        Map<String, String> collected = lines
+            .filter(l -> !l.isEmpty())
+            .filter(l -> !l.startsWith("#"))
+            .filter(l -> !l.startsWith(";"))
+            .filter(l -> !l.startsWith("//"))
+            .filter(l -> {
+                if(l.contains(":")) {
+                    return true;
+                }
+                Logger.warning("Ignoring invalid config line: '" + l + "'");
+                return false;
+            })
+            .map(line -> line.split(":"))
+            .collect(Collectors.toMap(
+                p -> p[0],
+                p -> p[1],
+                (a, b) -> b
+            ));
+
         configValues.clear();
-        configLines.forEach(line -> {
-            if(line.isEmpty() || line.startsWith("#") || line.startsWith(";") || line.startsWith("//")) {
-                return;
-            }
-            if(!line.contains(":")) {
-                Logger.warning("Ignoring invalid config line: '" + line + "'");
-                return;
-            }
-            String[] parts = line.split(":");
-            configValues.put(parts[0].trim(), parts[1].trim());
-        });
+        configValues.putAll(collected);
     }
 
     public void save() {
@@ -54,8 +64,8 @@ public class Config {
             Files.write(
                 configFile,
                 configValues.entrySet().stream()
-                        .map(entry -> entry.getKey() + ':' + entry.getValue())
-                        .collect(Collectors.toList()),
+                    .map(entry -> entry.getKey() + ':' + entry.getValue())
+                    .collect(Collectors.toList()),
                 Charset.forName("utf-8"),
                 StandardOpenOption.TRUNCATE_EXISTING
             );
